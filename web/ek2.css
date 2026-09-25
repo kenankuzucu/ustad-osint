@@ -1,0 +1,79 @@
+/* ==========================================================================
+   ÜSTAD OSINT v1.6 — YENİ NESİL ARAÇLAR panel stilleri
+   Tema değişkenleriyle uyumlu; panel-renk.css ile birlikte çalışır.
+   ========================================================================== */
+
+/* --- ortak kutular --- */
+.e2Kart { border: 1px solid var(--cizgi); border-radius: 10px; background: var(--kart); padding: 12px 14px; margin: 10px 0; }
+.e2Baslik { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--ton, var(--yazi)); margin-bottom: 8px; letter-spacing: .4px; font-size: 13.5px; }
+.e2Baslik i { font-style: normal; font-size: 17px; }
+.e2Alt { color: var(--soluk); font-size: 12px; line-height: 1.55; }
+.e2Ipucu {
+  border-left: 3px solid var(--ton, var(--renk1)); background: color-mix(in srgb, var(--ton, var(--renk1)) 8%, transparent);
+  border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px; font-size: 12.5px; color: var(--yazi2); line-height: 1.6;
+}
+.e2Ipucu b { color: var(--ton, var(--yazi)); }
+.e2Ipucu .ornek { display: block; margin-top: 5px; color: var(--renk2); font-family: "Cascadia Mono", Consolas, monospace; font-size: 11.5px; }
+.e2Satir { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0; }
+.e2Not { color: var(--soluk); font-size: 11.5px; font-family: "Cascadia Mono", Consolas, monospace; }
+
+/* --- tablo --- */
+.e2Tablo { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+.e2Tablo th { text-align: left; color: var(--soluk); font-weight: 700; padding: 7px 8px; border-bottom: 1px solid var(--cizgi); font-size: 11px; letter-spacing: .5px; }
+.e2Tablo td { padding: 7px 8px; border-bottom: 1px solid color-mix(in srgb, var(--cizgi) 55%, transparent); color: var(--yazi2); vertical-align: top; }
+.e2Tablo tr:hover td { background: color-mix(in srgb, var(--ton, var(--renk1)) 7%, transparent); }
+.e2Mono { font-family: "Cascadia Mono", Consolas, monospace; }
+
+/* --- rozetler --- */
+.e2Rozet { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: .4px; border: 1px solid currentColor; }
+.e2Kirmizi { color: #ef4444; background: rgba(239, 68, 68, .12); }
+.e2Turuncu { color: #f59e0b; background: rgba(245, 158, 11, .12); }
+.e2Yesil { color: #22c55e; background: rgba(34, 197, 94, .12); }
+.e2Mavi { color: #37e0ff; background: rgba(55, 224, 255, .12); }
+.e2Mor { color: #c084fc; background: rgba(192, 132, 252, .12); }
+.e2Gri { color: var(--soluk); background: rgba(120, 140, 160, .12); }
+
+/* --- metrik kartları --- */
+.e2Kartlar { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 10px 0; }
+.e2Metrik { border: 1px solid color-mix(in srgb, var(--ton, var(--renk1)) 45%, var(--cizgi)); border-radius: 10px; padding: 11px 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ton, var(--renk1)) 12%, transparent), transparent); }
+.e2Metrik b { display: block; font-size: 21px; font-weight: 800; color: var(--ton, var(--yazi));
+  font-family: "Cascadia Mono", Consolas, monospace; font-variant-numeric: tabular-nums; }
+.e2Metrik span { display: block; color: var(--soluk); font-size: 11px; margin-top: 3px; letter-spacing: .3px; }
+
+/* --- şifre/başlık girdileri --- */
+.e2Girdi, .e2Alan { background: var(--arka2); border: 1px solid var(--cizgi); color: var(--yazi);
+  border-radius: 8px; padding: 9px 11px; font-size: 12.5px; font-family: "Cascadia Mono", Consolas, monospace; }
+.e2Girdi:focus, .e2Alan:focus { outline: none; border-color: var(--ton, var(--renk1)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ton, var(--renk1)) 20%, transparent); }
+.e2Alan { width: 100%; min-height: 130px; resize: vertical; line-height: 1.5; }
+.e2Girdi.genis { min-width: 300px; }
+
+/* --- harita (canlı akış) --- */
+.e2HaritaKap { position: relative; border: 1px solid var(--cizgi); border-radius: 10px; overflow: hidden; background: #03080f; }
+.e2HaritaKap canvas { display: block; width: 100%; height: 300px; }
+
+/* --- bildirim anahtarları --- */
+.e2Anahtar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 2px; border-bottom: 1px solid color-mix(in srgb, var(--cizgi) 55%, transparent); font-size: 12.5px; }
+.e2Anahtar span { color: var(--yazi2); }
+.e2Anahtar input { width: 18px; height: 18px; accent-color: var(--ton, var(--renk1)); }
+
+/* --- sır bulgusu --- */
+.e2Sir { border-left: 3px solid #ef4444; background: rgba(239, 68, 68, .07); border-radius: 8px; padding: 9px 11px; margin: 7px 0; font-size: 12px; }
+.e2Sir.yuksek { border-left-color: #f59e0b; background: rgba(245, 158, 11, .07); }
+.e2Sir span { display: block; color: var(--soluk); font-size: 11.5px; margin-top: 3px; font-family: "Cascadia Mono", Consolas, monospace; }
+
+/* --- cihaz kartı --- */
+.e2Cihaz { border: 1px solid var(--cizgi); border-radius: 9px; padding: 9px 11px; margin: 6px 0; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.e2Cihaz.yeni { border-color: #f59e0b; box-shadow: 0 0 14px rgba(245, 158, 11, .18); }
+.e2Cihaz b { font-family: "Cascadia Mono", Consolas, monospace; color: var(--yazi); font-size: 12.5px; }
+.e2Cihaz small { color: var(--soluk); font-size: 11px; }
+
+/* --- şifre gücü çubuğu --- */
+.e2Cubuk { height: 9px; border-radius: 999px; background: var(--arka2); border: 1px solid var(--cizgi); overflow: hidden; margin: 8px 0 4px; }
+.e2Cubuk i { display: block; height: 100%; background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e); }
+
+@media (max-width: 640px) {
+  .e2Girdi.genis { min-width: 100%; }
+  .e2HaritaKap canvas { height: 220px; }
+  .e2Tablo { font-size: 11px; }
+}

@@ -1,0 +1,96 @@
+/* ==========================================================================
+   ÜSTAD OSINT — 3D HACKER KATMANI
+   • perspektifli zemin ızgarası (kayan 3D grid)
+   • kartlara/menülere gerçek 3D eğim (fare ile, JS sürer)
+   • neon derinlik, parlama ve tarama çizgisi
+   Ölçülü: prefers-reduced-motion ve dokunmatik cihazda sadeleşir.
+   ========================================================================== */
+
+.eylemSerit, .kenar, .orta { transform-style: preserve-3d; }
+
+/* --------------------------- 1) 3D ZEMİN IZGARASI --------------------------- */
+body::before{
+  content:"";position:fixed;left:-30%;right:-30%;bottom:-8%;height:54vh;
+  pointer-events:none;z-index:0;opacity:.26;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--renk1) 60%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--renk1) 45%, transparent) 1px, transparent 1px);
+  background-size:66px 66px;
+  transform:perspective(560px) rotateX(73deg);
+  transform-origin:bottom center;
+  animation:izgaraKay 5.6s linear infinite;
+  -webkit-mask-image:linear-gradient(to top, #000 8%, transparent 82%);
+  mask-image:linear-gradient(to top, #000 8%, transparent 82%);
+}
+@keyframes izgaraKay{to{background-position:0 66px, 0 66px}}
+
+/* açık temalarda ızgara olmasın (okunurluk) */
+[data-tema="gunduz"] body::before, [data-tema="buz"] body::before,
+[data-tema="kum"] body::before, [data-tema="kalem"] body::before{ display:none }
+
+/* --------------------------- 2) 3D DERİNLİK --------------------------- */
+.osKutu, .kart, .kutu, .panel > .kart{
+  position:relative;transform-style:preserve-3d;
+  transition:transform .28s cubic-bezier(.2,.75,.3,1), box-shadow .28s ease, border-color .2s;
+  will-change:transform;
+}
+.osKutu::after, .kart::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(135deg, rgba(255,255,255,.10), transparent 42%);
+  opacity:0;transition:opacity .28s ease;
+}
+.osKutu:hover::after, .kart:hover::after{opacity:1}
+.osKutu:hover, .kart:hover{
+  box-shadow:0 20px 48px rgba(0,0,0,.55),
+             0 0 0 1px color-mix(in srgb, var(--renk1) 42%, transparent),
+             0 0 30px color-mix(in srgb, var(--renk1) 24%, transparent);
+  border-color:color-mix(in srgb, var(--renk1) 45%, var(--cizgi));
+}
+[data-tema="gunduz"] .osKutu:hover, [data-tema="buz"] .osKutu:hover,
+[data-tema="kum"] .osKutu:hover, [data-tema="kalem"] .osKutu:hover{
+  box-shadow:0 16px 34px rgba(24,54,84,.18), 0 0 0 1px color-mix(in srgb, var(--renk1) 35%, transparent);
+}
+
+/* --------------------------- 3) MENÜ 3D --------------------------- */
+.kenar{perspective:900px}
+.menuDug{transition:transform .2s cubic-bezier(.2,.8,.3,1), background .18s, box-shadow .2s;transform-style:preserve-3d}
+.menuDug:hover{transform:translateX(4px) translateZ(18px) rotateY(-3.5deg);box-shadow:-6px 8px 22px rgba(0,0,0,.45)}
+.menuDug.sec{box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--renk) 40%, transparent), 0 0 18px color-mix(in srgb, var(--renk) 22%, transparent)}
+
+/* --------------------------- 4) EYLEM ŞERİDİ 3D --------------------------- */
+.eylemSerit{position:relative;overflow:hidden}
+.eylemSerit::after{
+  content:"";position:absolute;top:0;bottom:0;width:38%;
+  background:linear-gradient(100deg, transparent, rgba(255,255,255,.07), transparent);
+  animation:seritTara 6.5s linear infinite;pointer-events:none;
+}
+@keyframes seritTara{0%{transform:translateX(-120%)}100%{transform:translateX(320%)}}
+.esDug{transition:transform .18s cubic-bezier(.2,.8,.3,1), box-shadow .2s, background .18s;transform-style:preserve-3d}
+.esDug:hover{transform:translateZ(22px) rotateX(-12deg);box-shadow:0 12px 26px rgba(0,0,0,.5)}
+.esDug:active{transform:translateZ(4px) rotateX(-4deg)}
+
+/* madalyona hafif 3D derinlik (JS fare ile eğer) */
+.esKisi, .kunyeBuyuk{transform-style:preserve-3d;transition:transform .25s cubic-bezier(.2,.8,.3,1)}
+
+/* --------------------------- 5) NEON BAŞLIKLAR --------------------------- */
+.osKutuBaslik, .panelBaslik, .ustBaslik h1{
+  text-shadow:0 0 14px color-mix(in srgb, var(--renk1) 45%, transparent);
+}
+.menuBaslik{text-shadow:0 0 12px color-mix(in srgb, var(--renk2) 40%, transparent)}
+
+/* --------------------------- 6) MATRİS YAĞMURU --------------------------- */
+#matrisKatman{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .6s ease;
+}
+body.matrisAcik #matrisKatman{opacity:.42}
+[data-tema="qdoled"] body.matrisAcik #matrisKatman{opacity:.30}
+
+/* --------------------------- 7) SADELEŞTİRME --------------------------- */
+@media (prefers-reduced-motion: reduce){
+  body::before, .eylemSerit::after{animation:none}
+  .osKutu, .kart, .menuDug, .esDug, .esKisi, .kunyeBuyuk{transition:none}
+}
+@media (pointer: coarse){
+  body::before{opacity:.16}
+  .menuDug:hover, .esDug:hover{transform:none}
+}

@@ -1,0 +1,91 @@
+/* ÜSTAD OSINT v1.5 — EK ARAÇLAR panel stilleri
+   Mevcut temalarla uyumlu: renkler tema değişkenlerinden gelir. */
+.osIpucu {
+  border: 1px solid rgba(120, 200, 255, .22);
+  border-left: 4px solid #00ffa3;
+  background: linear-gradient(180deg, rgba(0, 255, 163, .07), rgba(0, 0, 0, .18));
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 0 0 12px;
+  font-size: .92rem;
+  line-height: 1.55;
+  color: var(--yazi, #d8e6f2);
+}
+.osIpucu b { color: #00ffa3; }
+.osIpucu u { text-decoration-color: #00ffa3; text-underline-offset: 3px; }
+.osIpucu .ornek { display: block; margin-top: 6px; color: #ffd479; }
+.osIpucu .ornek b { color: #ffd479; }
+.osIpucu .not { display: block; margin-top: 5px; font-size: .84rem; opacity: .8; color: #8fb4d0; }
+
+.ekIkincil { opacity: .82; }
+.ekIndir:disabled, .ekIkincil:disabled { opacity: .38; cursor: not-allowed; }
+.ekFormBlok { flex-wrap: wrap; align-items: flex-start; }
+.ekFormBlok textarea {
+  flex: 1 1 320px; min-height: 92px; resize: vertical;
+  background: rgba(0, 0, 0, .45); color: var(--yazi, #d8e6f2);
+  border: 1px solid rgba(120, 200, 255, .3); border-radius: 9px;
+  padding: 9px 11px; font-family: "Cascadia Mono", Consolas, monospace; font-size: .9rem;
+}
+
+/* ---- tablo ---- */
+.ekTablo { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.ekTablo th, .ekTablo td { padding: 6px 9px; text-align: left; border-bottom: 1px solid rgba(120, 200, 255, .14); vertical-align: top; }
+.ekTablo th { color: #8fb4d0; font-weight: 700; text-transform: uppercase; font-size: .74rem; letter-spacing: .4px; }
+.ekTablo tr:hover td { background: rgba(0, 255, 163, .05); }
+.ekTablo code, .ekKod { font-family: "Cascadia Mono", Consolas, monospace; color: #b6ff3d; }
+.ekTablo .ekRisk { font-weight: 800; }
+.ekRisk.yuksek, .ekRisk.kritik { color: #ff5d5d; }
+.ekRisk.orta { color: #ffb400; }
+.ekRisk.dusuk, .ekRisk.iyi { color: #33d17a; }
+
+/* ---- rozet ---- */
+.ekRozet {
+  display: inline-block; padding: 1px 8px; border-radius: 999px;
+  font-size: .74rem; font-weight: 700; border: 1px solid currentColor; margin: 0 4px 4px 0;
+}
+.ekRozet.yuksek { color: #ff5d5d; background: rgba(255, 93, 93, .1); }
+.ekRozet.orta { color: #ffb400; background: rgba(255, 180, 0, .1); }
+.ekRozet.iyi { color: #33d17a; background: rgba(51, 209, 122, .1); }
+.ekRozet.bilgi { color: #4da3ff; background: rgba(77, 163, 255, .1); }
+.ekPort {
+  display: inline-block; min-width: 38px; text-align: center; margin: 2px 4px 2px 0;
+  padding: 2px 8px; border-radius: 7px; font-family: "Cascadia Mono", monospace;
+  background: rgba(0, 255, 163, .1); border: 1px solid rgba(0, 255, 163, .3); color: #00ffa3;
+}
+.ekPort.tehlike { background: rgba(255, 93, 93, .12); border-color: rgba(255, 93, 93, .4); color: #ff8f8f; }
+.ekAnahtar { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px dashed rgba(120, 200, 255, .12); }
+.ekAnahtar b { color: #8fb4d0; font-weight: 600; }
+.ekCve { border-left: 3px solid #ff5d5d; padding: 6px 10px; margin: 0 0 7px; background: rgba(255, 93, 93, .06); border-radius: 0 8px 8px 0; }
+.ekCve .id { font-family: "Cascadia Mono", monospace; font-weight: 800; color: #ff8f8f; }
+.ekCve .ozet { display: block; margin-top: 3px; font-size: .85rem; opacity: .9; }
+.ekCve .skor { float: right; font-weight: 800; }
+.ekSirali { margin: 0; padding-left: 18px; }
+.ekSirali li { margin-bottom: 4px; }
+
+/* ---- terminal ---- */
+.ekTerminal {
+  border: 1px solid rgba(0, 255, 102, .3); border-radius: 11px; overflow: hidden;
+  background: rgba(0, 0, 0, .6); box-shadow: 0 0 24px rgba(0, 255, 102, .08) inset;
+}
+.ekTerminalGovde {
+  height: 340px; overflow-y: auto; padding: 11px 13px;
+  font-family: "Cascadia Mono", Consolas, monospace; font-size: .87rem; line-height: 1.5;
+}
+.ekTermSatir { white-space: pre-wrap; word-break: break-word; margin-bottom: 3px; color: #b9ffcd; }
+.ekTermSatir.ekBilgi { color: #58c98a; }
+.ekTermSatir.ekUyari { color: #ffcf4d; }
+.ekTermSatir.ekHata { color: #ff7b7b; }
+.ekTermSatir.ekKomut { color: #00ff66; font-weight: 700; }
+.ekTermGirdi { display: flex; align-items: center; gap: 8px; padding: 7px 11px; background: rgba(0, 255, 102, .06); border-top: 1px solid rgba(0, 255, 102, .22); }
+.ekTermImlec { font-family: "Cascadia Mono", monospace; color: #00ff66; font-size: .85rem; white-space: nowrap; }
+.ekTermGirdi input {
+  flex: 1; background: transparent; border: none; outline: none; color: #b9ffcd;
+  font-family: "Cascadia Mono", monospace; font-size: .9rem;
+}
+
+/* ---- sesli özet düğmesi ---- */
+.ekSesDug {
+  border: 1px solid rgba(212, 175, 55, .5); background: rgba(212, 175, 55, .12);
+  color: #ffd479; border-radius: 9px; padding: 7px 13px; cursor: pointer; font-weight: 700;
+}
+.ekSesDug:hover { background: rgba(212, 175, 55, .22); }

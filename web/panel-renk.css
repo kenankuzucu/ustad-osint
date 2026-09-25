@@ -1,0 +1,104 @@
+/* ==========================================================================
+   ÜSTAD OSINT v1.5 — PANEL RENK UYUMU (WhatsApp tasarımındaki renk düzeni)
+   Kural: her modül kendi renginde yazı + simge; istatistik kartları renkli
+   çerçeve + renkli sayı; risk etiketleri Yüksek=kırmızı, Orta=turuncu, Düşük=yeşil;
+   portlar Açık=yeşil, Kapalı=kırmızı.
+   ========================================================================== */
+
+:root {
+  --renk-kirmizi: #ef4444;
+  --renk-turuncu: #f59e0b;
+  --renk-yesil: #22c55e;
+  --renk-mavi: #2d7dff;
+  --renk-camgobegi: #22d3ee;
+  --renk-mor: #a855f7;
+  --renk-sari: #eab308;
+  --renk-turkuaz: #2dd4bf;
+  --yazi-acik: #e5eef7;
+  --yazi-soluk: #8fb4d0;
+}
+
+/* ---------- 1) Panel başlıkları ve simgeleri kendi renginde ---------- */
+.panel .modBaslik { position: relative; }
+.panel .modBaslik::before {
+  content: ""; position: absolute; left: -10px; top: 4px; bottom: 4px; width: 3px;
+  border-radius: 3px; background: var(--ton, var(--renk-mavi));
+  box-shadow: 0 0 12px var(--ton, var(--renk-mavi));
+  opacity: .85;
+}
+.panel .modBaslik h2 {
+  color: var(--ton, var(--yazi-acik)) !important;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--ton, #2d7dff) 45%, transparent);
+  letter-spacing: .2px;
+}
+.panel .modBaslik p { color: var(--yazi-soluk) !important; }
+.panel .modBaslik .mIkon {
+  color: var(--ton, var(--renk-mavi)) !important;
+  border: 1px solid color-mix(in srgb, var(--ton, #2d7dff) 55%, transparent) !important;
+  background: color-mix(in srgb, var(--ton, #2d7dff) 14%, transparent) !important;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--ton, #2d7dff) 25%, transparent) inset,
+              0 0 10px color-mix(in srgb, var(--ton, #2d7dff) 18%, transparent);
+  border-radius: 12px;
+  filter: none;
+}
+
+/* ---------- 2) Menü simgeleri kendi renginde ---------- */
+.menuDug i { color: var(--renk, var(--yazi-soluk)) !important; filter: none; }
+.menuDug.sec i { color: var(--renk, #fff) !important; text-shadow: 0 0 10px var(--renk, #fff); }
+.menuDug.sec span { color: var(--renk, #fff) !important; }
+
+/* ---------- 3) Kutu başlıkları (Son Bulunan Bulgular / Teknolojiler …) ---------- */
+.osKutuBaslik {
+  color: var(--yazi-acik) !important;
+  border-left: 3px solid var(--renk-camgobegi);
+  padding-left: 9px;
+}
+.osKutuBaslik i { color: var(--renk-camgobegi) !important; filter: none; }
+.osKutuBaslik .sag { color: var(--yazi-soluk) !important; }
+
+/* ---------- 4) İstatistik kartları: renkli çerçeve + renkli sayı ----------
+   Yalnız --ton tanımlıysa renklenir; tanımsızsa tema görünümü korunur. */
+.osKart, .kart:has(.osKartBaslik) {
+  border-color: color-mix(in srgb, var(--ton, transparent) 55%, var(--cizgi, #22303f)) !important;
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--ton, transparent) 14%, transparent), transparent) !important;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--ton, transparent) 16%, transparent);
+}
+.kart {
+  border-color: color-mix(in srgb, var(--ton, transparent) 45%, var(--cizgi, #22303f)) !important;
+}
+.osKart .deger { color: var(--ton, var(--yazi, #e5eef7)) !important; }
+.osKart .etiket, .osKart span { color: var(--yazi-soluk) !important; }
+.osKartBaslik, .osKart b { color: var(--ton, var(--yazi-acik)) !important; }
+
+/* ---------- 5) Risk / önem etiketleri (tasarımdaki renkler) ---------- */
+.ekRisk.yuksek, .ekRozet.yuksek, .riskYuksek, .onem-yuksek { color: var(--renk-kirmizi) !important; background: rgba(239, 68, 68, .12) !important; }
+.ekRisk.kritik, .ekRozet.kritik { color: var(--renk-kirmizi) !important; background: rgba(239, 68, 68, .16) !important; }
+.ekRisk.orta, .ekRozet.orta, .riskOrta, .onem-orta { color: var(--renk-turuncu) !important; background: rgba(245, 158, 11, .12) !important; }
+.ekRisk.dusuk, .ekRisk.iyi, .ekRozet.iyi, .riskDusuk, .onem-dusuk { color: var(--renk-yesil) !important; background: rgba(34, 197, 94, .12) !important; }
+.ekRisk.bilgi, .ekRozet.bilgi { color: var(--renk-mavi) !important; background: rgba(45, 125, 255, .12) !important; }
+
+/* Tablo içindeki risk sözcükleri (Yüksek/Orta/Düşük) */
+td .ekRisk, td .ekRozet { border: 1px solid currentColor; border-radius: 6px; padding: 1px 7px; font-size: .78rem; }
+
+/* ---------- 6) Port listesi: Açık=yeşil, Kapalı=kırmızı ---------- */
+.ekPort { color: var(--renk-yesil) !important; border-color: rgba(34, 197, 94, .45) !important; background: rgba(34, 197, 94, .1) !important; }
+.ekPort.tehlike { color: var(--renk-kirmizi) !important; border-color: rgba(239, 68, 68, .5) !important; background: rgba(239, 68, 68, .12) !important; }
+.portAcik { color: var(--renk-yesil); font-weight: 700; }
+.portKapali { color: var(--renk-kirmizi); font-weight: 700; }
+
+/* ---------- 7) CVE kartları: CVSS rengi ---------- */
+.ekCve { background: rgba(255, 255, 255, .02); border-radius: 0 10px 10px 0; }
+.ekCve .id { color: var(--renk-kirmizi) !important; }
+.ekCve .ozet { color: var(--yazi-acik); }
+
+/* ---------- 8) Bilgi kutuları: modül rengiyle uyum ---------- */
+.osIpucu b { color: var(--renk-yesil); }
+
+/* ---------- 9) Düğmeler ---------- */
+.modDug { border: 1px solid color-mix(in srgb, var(--ton, #2d7dff) 45%, transparent); }
+.modDug:hover { box-shadow: 0 0 14px color-mix(in srgb, var(--ton, #2d7dff) 30%, transparent); }
+
+/* ---------- 10) Yazı netliği (tasarımdaki keskin görünüm) ---------- */
+.panel h2 { font-weight: 800; }
+.panel p, .osKutuGovde, .ekTablo td { color: var(--yazi-acik); }
+.ekAnahtar b, .osKutuBaslik { letter-spacing: .3px; }

@@ -1,0 +1,9 @@
+veri/
+yedek/
+__pycache__/
+*.pyc
+*.log
+*.apk
+yerel-ag-tarama-*.txt
+baslatma-gunlugu.txt
+scratch-sunucu.log

@@ -1,0 +1,84 @@
+/* ==========================================================================
+   ÜSTAD OSINT — KESKİN YAZI + 4K/QD-OLED KALİTE KATMANI
+   • Keskin, güçlü tipografi (kalın başlıklar, hizalı rakamlar)
+   • 4K/TV ekranlarda otomatik büyüyen punto ve ferah yerleşim
+   • QD-OLED: gerçek siyah üzerinde parlak ince çizgiler, bloom'suz net metin
+   ========================================================================== */
+
+:root{
+  --baslik: "Segoe UI Variable Display", "Bahnschrift SemiBold", "Segoe UI Semibold", "Inter", var(--sans);
+  --veri: "Cascadia Mono", "Consolas", "JetBrains Mono", "DejaVu Sans Mono", monospace;
+}
+
+html{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-synthesis: none;
+}
+body{ font-weight: 450; }
+
+/* --- güçlü, keskin başlıklar --- */
+h1, h2, h3, .panelBaslik, .osKutuBaslik, .ustBaslik h1, .kunyeBuyuk b{
+  font-family: var(--baslik);
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+.osKutuBaslik{ font-weight: 750; letter-spacing: .25px; font-size: 13.5px; }
+.menuDug span{ font-weight: 600; letter-spacing: .2px; }
+.osDug, .esDug, .menuDug{ font-weight: 650 }
+
+/* --- sayılar ve teknik metin: eşit genişlik, keskin --- */
+.olcu, .osAnahtar b, table, .tablo, .mono, code, pre,
+#gostergeKartlar .olcu, .osKutuBaslik .sag, .logKutu, .kunyeSurum{
+  font-family: var(--veri);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1, "ss01" 1;
+}
+.olcu{ font-weight: 800; letter-spacing: -.2px; }
+table td, table th{ letter-spacing: .1px }
+label, .modKutu{ font-weight: 600; letter-spacing: .15px }
+input, select, textarea{ font-weight: 600; letter-spacing: .2px }
+
+/* --- keskin kenarlar (alt piksel bulanıklığını önle) --- */
+.osKutu, .kart, .menuDug, .panel, .esKisi, .osKutuGovde{
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+canvas{ image-rendering: auto }
+img{ image-rendering: -webkit-optimize-contrast }
+
+/* --- QD-OLED: gerçek siyah, parlak ince çizgi, net kontrast --- */
+[data-tema="qdoled"] .osKutu,
+[data-tema="qdoled"] .kart,
+[data-tema="qdoled"] .menuDug,
+[data-tema="qdoled"] .esDug{ border-color: #131c26 }
+[data-tema="qdoled"] .osKutu:hover,
+[data-tema="qdoled"] .kart:hover{ border-color: rgba(0,255,138,.55) }
+[data-tema="qdoled"] .menuDug.sec{ border-left: 3px solid var(--renk1) }
+[data-tema="qdoled"] .osKutuBaslik .sag{ color: #9fb8cf }
+[data-tema="qdoled"] body::before{ opacity: .18 }
+[data-tema="qdoled"] .menuBaslik{ color: #b9d3ea }
+
+/* --- 4K / TV: ekran büyüdükçe punto ve yerleşim büyür (10 ayak görünümü) --- */
+@media (min-width: 1900px){
+  :root{ --yaz: 1.12 }
+  .kenar{ width: 286px }
+  .osHarita{ height: 330px }
+}
+@media (min-width: 2400px){
+  :root{ --yaz: 1.24 }
+  .kenar{ width: 316px }
+  .osHarita{ height: 360px }
+  .gostergeKartlar, #gostergeKartlar{ gap: 12px }
+}
+@media (min-width: 3000px){
+  :root{ --yaz: 1.36 }
+  .kenar{ width: 348px }
+  .osHarita{ height: 420px }
+}
+/* yüksek yoğunluklu ekranlarda ince çizgiler daha okunur olsun */
+@media (min-resolution: 2dppx){
+  .osKutu, .kart{ box-shadow: 0 0 0 0.5px rgba(255,255,255,.05) }
+}

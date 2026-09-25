@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="tr" data-tema="gece">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ÜSTAD OSINT · Saldırı Yüzeyi ve SOC Konsolu</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b1622">
+<link rel="stylesheet" href="stil.css">
+<link rel="stylesheet" href="osint.css">
+<link rel="stylesheet" href="hacker-3d.css">
+<link rel="stylesheet" href="keskin-4k.css">
+</head>
+<body>
+
+<!-- ============================== ÜST ŞERİT ============================== -->
+<header class="ust">
+  <div class="ustSol">
+    <div class="amblem" id="amblem" title="ÜSTAD OSINT">
+      <canvas id="amblemTuval" width="96" height="96"></canvas>
+      <span class="amblemHalka"></span>
+    </div>
+    <div class="ustBaslik">
+      <h1>ÜSTAD OSINT</h1>
+      <p>Saldırı Yüzeyi · Blue Team SOC Konsolu</p>
+    </div>
+  </div>
+  <div class="ustSag">
+    <span class="rozet" id="rozetNmap">nmap: ölçülüyor…</span>
+    <span class="rozet" id="rozetAg">ağ: —</span>
+    <span class="rozet" id="rozetMotor">motor: —</span>
+    <span class="rozet" id="rozetSaat">--:--:--</span>
+    <div class="temaSec" id="temaSec"></div>
+  </div>
+</header>
+
+<!-- ============================== EYLEM ŞERİDİ ============================== -->
+<div class="eylemSerit" id="eylemSerit">
+  <div class="esAd">
+    <div class="amblem" style="width:38px;height:38px"><span class="amblemHalka"></span></div>
+    <div>
+      <b>ÜSTAD OSINT</b>
+      <span>Open Source Intelligence</span>
+    </div>
+  </div>
+  <button class="esDug" data-git="scan"><i>🎯</i>SCAN</button>
+  <button class="esDug" data-git="analyze"><i>🔍</i>ANALYZE</button>
+  <button class="esDug" data-git="discover"><i>🧭</i>DISCOVER</button>
+  <button class="esDug" data-git="map"><i>🗺️</i>MAP</button>
+  <button class="esDug" data-git="report"><i>📄</i>REPORT</button>
+  <div class="esKisi">
+    <img src="foto-kurucu.png" alt="Üstad Kenan Kuzucu">
+    <div>
+      <b>Üstad Kenan Kuzucu</b>
+      <span>OSINT Araştırmacısı</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== GÖVDE ============================== -->
+<div class="govde">
+
+  <!-- SOL MENÜ -->
+  <aside class="menu" id="menu">
+    <div class="menuGrup">// OSINT MODÜLLERİ</div>
+    <button class="menuDug" data-panel="osint" style="--renk:#2d7dff"><i>🎛️</i><span>OSINT GÖSTERGE</span><b id="say-osint"></b></button>
+    <button class="menuDug" data-panel="osarama" style="--renk:#37e0ff"><i>🔎</i><span>OSINT ARAMA</span><b id="say-osarama"></b></button>
+    <button class="menuDug" data-panel="domain" style="--renk:#4f9dff"><i>🌐</i><span>DOMAIN KEŞFİ</span><b id="say-domain"></b></button>
+    <button class="menuDug" data-panel="subdomain" style="--renk:#8b5cf6"><i>🧩</i><span>SUBDOMAIN TARAMA</span><b id="say-subdomain"></b></button>
+    <button class="menuDug" data-panel="ipasn" style="--renk:#2ee6a8"><i>📡</i><span>IP / ASN ANALİZİ</span><b id="say-ipasn"></b></button>
+    <button class="menuDug" data-panel="whois" style="--renk:#ffc107"><i>📋</i><span>WHOIS / RDAP</span><b id="say-whois"></b></button>
+    <button class="menuDug" data-panel="dns" style="--renk:#00d4a0"><i>🗂️</i><span>DNS ANALİZİ</span><b id="say-dns"></b></button>
+    <button class="menuDug" data-panel="eposta" style="--renk:#ff8f00"><i>✉️</i><span>E-POSTA İSTİHBARATI</span><b id="say-eposta"></b></button>
+    <button class="menuDug" data-panel="sosyal" style="--renk:#ff5470"><i>👥</i><span>SOSYAL MEDYA</span><b id="say-sosyal"></b></button>
+    <button class="menuDug" data-panel="kullanici" style="--renk:#e879f9"><i>🧍</i><span>KULLANICI ADI ARAMA</span><b id="say-kullanici"></b></button>
+    <button class="menuDug" data-panel="github" style="--renk:#a9c2d6"><i>🐙</i><span>GITHUB İSTİHBARATI</span><b id="say-github"></b></button>
+    <button class="menuDug" data-panel="webtek" style="--renk:#22d3ee"><i>🧬</i><span>WEB TEKNOLOJİLERİ</span><b id="say-webtek"></b></button>
+    <button class="menuDug" data-panel="cloud" style="--renk:#60a5fa"><i>☁️</i><span>CLOUD KEŞFİ</span><b id="say-cloud"></b></button>
+    <button class="menuDug" data-panel="sizinti" style="--renk:#f43f5e"><i>💧</i><span>VERİ SIZINTISI TESPİTİ</span><b id="say-sizinti"></b></button>
+    <button class="menuDug" data-panel="darkweb" style="--renk:#7c3aed"><i>🕶️</i><span>DARK WEB ARAMA</span><b id="say-darkweb"></b></button>
+    <button class="menuDug" data-panel="tehdit" style="--renk:#ef4444"><i>🔥</i><span>TEHDİT HARİTASI</span><b id="say-tehdit"></b></button>
+    <button class="menuDug" data-panel="osrapor" style="--renk:#d4af37"><i>📑</i><span>RAPORLAR</span><b id="say-osrapor"></b></button>
+    <div class="menuGrup">// EK ARAÇLAR (v1.5)</div>
+    <button class="menuDug" data-panel="pasif" style="--renk:#00ffa3"><i>🛰️</i><span>PASİF RADAR</span><b id="say-pasif"></b></button>
+    <button class="menuDug" data-panel="cve" style="--renk:#ff5d5d"><i>🧨</i><span>CVE EŞLEŞTİRME</span><b id="say-cve"></b></button>
+    <button class="menuDug" data-panel="arsiv" style="--renk:#ffb400"><i>🕰️</i><span>ARŞİV &amp; GÖRÜNTÜ</span><b id="say-arsiv"></b></button>
+    <button class="menuDug" data-panel="takeover" style="--renk:#c084fc"><i>🧲</i><span>SUBDOMAIN TAKEOVER</span><b id="say-takeover"></b></button>
+    <button class="menuDug" data-panel="savunma" style="--renk:#33d17a"><i>🛡️</i><span>SAVUNMA DUVARI</span><b id="say-savunma"></b></button>
+    <button class="menuDug" data-panel="toplu" style="--renk:#4da3ff"><i>🗃️</i><span>TOPLU TARAMA</span><b id="say-toplu"></b></button>
+    <button class="menuDug" data-panel="terminal" style="--renk:#00ff66"><i>⌨️</i><span>MİNİ TERMİNAL</span><b id="say-terminal"></b></button>
+    <button class="menuDug" data-panel="kanit" style="--renk:#d4af37"><i>🔗</i><span>KANIT ZİNCİRİ</span><b id="say-kanit"></b></button>
+    <div class="menuGrup">// YENİ NESİL ARAÇLAR (v1.6)</div>
+    <button class="menuDug" data-panel="istismar" style="--renk:#ef4444"><i>🚨</i><span>AKTİF İSTİSMAR RADARI</span><b id="say-istismar"></b></button>
+    <button class="menuDug" data-panel="postaguv" style="--renk:#37e0ff"><i>📧</i><span>E-POSTA KALKANI</span><b id="say-postaguv"></b></button>
+    <button class="menuDug" data-panel="baslik" style="--renk:#f59e0b"><i>🔎</i><span>MAİL BAŞLIĞI ANALİZİ</span><b id="say-baslik"></b></button>
+    <button class="menuDug" data-panel="sertifika" style="--renk:#c084fc"><i>📜</i><span>SERTİFİKA LOGU (CT)</span><b id="say-sertifika"></b></button>
+    <button class="menuDug" data-panel="webzaf" style="--renk:#22c55e"><i>🛡️</i><span>WEB YAPILANDIRMA</span><b id="say-webzaf"></b></button>
+    <button class="menuDug" data-panel="fidye" style="--renk:#ff2d55"><i>🕵️</i><span>FİDYE YAZILIMI RADARI</span><b id="say-fidye"></b></button>
+    <button class="menuDug" data-panel="saldiri" style="--renk:#ff8f00"><i>🌍</i><span>CANLI SALDIRI AKIŞI</span><b id="say-saldiri"></b></button>
+    <button class="menuDug" data-panel="siravc" style="--renk:#d4af37"><i>🔑</i><span>KOD SIR AVCISI</span><b id="say-siravc"></b></button>
+    <button class="menuDug" data-panel="yerelag" style="--renk:#4da3ff"><i>📶</i><span>YEREL AĞ CİHAZLARI</span><b id="say-yerelag"></b></button>
+    <button class="menuDug" data-panel="sifrekontrol" style="--renk:#00ffa3"><i>🔐</i><span>ŞİFRE SIZINTI KONTROLÜ</span><b id="say-sifrekontrol"></b></button>
+    <button class="menuDug" data-panel="raporpaket" style="--renk:#ffb400"><i>🖨️</i><span>RAPOR PAKETİ (WORD/QR)</span><b id="say-raporpaket"></b></button>
+    <button class="menuDug" data-panel="bildirim" style="--renk:#8b5cf6"><i>🔔</i><span>OLAY &amp; BİLDİRİM</span><b id="say-bildirim"></b></button>
+    <button class="menuDug" data-panel="fark" style="--renk:#ff9f43"><i>⚖️</i><span>DEĞİŞİM (FARK)</span><b id="say-fark"></b></button>
+    <div class="menuGrup">// AĞ &amp; SOC KONSOLU</div>
+    <button class="menuDug" data-panel="gosterge" style="--renk:#37e0ff"><i>🛰️</i><span>GÖSTERGE PANELİ</span><b id="sayGosterge"></b></button>
+    <button class="menuDug" data-panel="yuzey"    style="--renk:#b14cff"><i>🕸️</i><span>SALDIRI YÜZEYİ HARİTASI</span><b id="sayYuzey"></b></button>
+    <button class="menuDug" data-panel="tarama"   style="--renk:#2ee6a8"><i>📡</i><span>TARAMA MERKEZİ</span><b id="sayTarama"></b></button>
+    <button class="menuDug" data-panel="alarm"    style="--renk:#ff5470"><i>🚨</i><span>ALARM &amp; TRİYAJ</span><b id="sayAlarm"></b></button>
+    <button class="menuDug" data-panel="ioc"      style="--renk:#ff8f00"><i>🧬</i><span>IOC KASASI</span><b id="sayIoc"></b></button>
+    <button class="menuDug" data-panel="dunya"    style="--renk:#4f9dff"><i>🌍</i><span>DÜNYA HARİTASI</span><b id="sayDunya"></b></button>
+    <button class="menuDug" data-panel="log"      style="--renk:#ffc107"><i>📜</i><span>LOG / SIEM ANALİZİ</span><b id="sayLog"></b></button>
+    <button class="menuDug" data-panel="olay"     style="--renk:#00e5ff"><i>🛡️</i><span>OLAY MÜDAHALESİ</span><b></b></button>
+    <button class="menuDug" data-panel="zafiyet"  style="--renk:#7cffb2"><i>🧰</i><span>ZAFİYET &amp; ÖNERİ</span><b></b></button>
+    <button class="menuDug" data-panel="rapor"    style="--renk:#d4af37"><i>📄</i><span>RAPOR &amp; KANIT</span><b></b></button>
+    <button class="menuDug" data-panel="ayar"     style="--renk:#9aa7b8"><i>⚙️</i><span>AYARLAR &amp; KAPSAM</span><b></b></button>
+
+    <div class="menuAlt">
+      <div class="kunyeBuyuk">
+      <img src="foto-kurucu.png" alt="Üstad Kenan Kuzucu">
+      <b>Üstad Kenan Kuzucu</b>
+      <span>OSINT Araştırmacısı</span>
+      <em>“Bilgi, gücün en temiz halidir.”</em>
+    </div>
+      <div class="kunyeSurum" style="text-align:center;font-size:10.5px;color:var(--soluk)">v<span id="surumYazi">1.2</span> · yerel çalışır</div>
+      <div class="menuYasal">Yalnız kendi sistemleriniz veya yazılı izin aldığınız sistemler. İzinsiz tarama TCK 243/244 kapsamında suçtur.</div>
+    </div>
+  </aside>
+
+  <!-- SAĞ İÇERİK -->
+  <main class="icerik" id="icerik">
+
+    <!-- ---------------------- GÖSTERGE PANELİ ---------------------- -->
+    <section class="panel" id="p-gosterge">
+      <div class="panelBaslik">
+        <h2>🛰️ GÖSTERGE PANELİ</h2>
+        <p>Son taramanın canlı özeti · risk skoru · servis dağılımı</p>
+      </div>
+      <div class="kartSira" id="gostergeKartlar">—</div>
+      <div class="ikili">
+        <div class="kart">
+          <h3>YÜZEY RİSK SKORU</h3>
+          <div class="riskAlan">
+            <canvas id="riskHalka" width="260" height="260"></canvas>
+            <div class="riskMetin">
+              <b id="riskPuan">0</b><span>/100</span>
+              <em id="riskEtiket">tarama yok</em>
+            </div>
+          </div>
+          <ul class="riskNeden" id="riskNedenler"><li>Henüz tarama yapılmadı.</li></ul>
+        </div>
+        <div class="kart">
+          <h3>SERVİS ÖNEM DAĞILIMI</h3>
+          <canvas id="onemCubuk" width="520" height="240"></canvas>
+          <div class="aciklama">Kritik servisler fidye yazılımı ve yanal hareket için ilk hedeftir.</div>
+        </div>
+      </div>
+      <div class="kart">
+        <h3>SON TARAMA AKIŞI</h3>
+        <div class="logKutu kisa" id="gostergeLog">tarama bekleniyor…</div>
+      </div>
+    </section>
+
+    <!-- ---------------------- SALDIRI YÜZEYİ HARİTASI ---------------------- -->
+    <section class="panel" id="p-yuzey">
+      <div class="panelBaslik">
+        <h2>🕸️ SALDIRI YÜZEYİ HARİTASI</h2>
+        <p>Her cihaz bir düğüm, her açık servis bir dal · risk ısısı renge yansır · düğüme tıkla</p>
+      </div>
+      <div class="kart">
+        <div class="yuzeyKontrol">
+          <button class="dug" id="yuzeySifir">☰ YERLEŞİMİ SIFIRLA</button>
+          <button class="dug" id="yuzeyYakinlas">＋</button>
+          <button class="dug" id="yuzeyUzaklas">－</button>
+          <label class="onay"><input type="checkbox" id="yuzeyEtiket" checked> etiketler</label>
+          <label class="onay"><input type="checkbox" id="yuzeyIsi" checked> risk ısısı</label>
+          <span class="soluk" id="yuzeySayac">0 düğüm</span>
+        </div>
+        <canvas id="yuzeyTuval" height="560"></canvas>
+        <div class="yuzeyBilgi" id="yuzeyBilgi">Haritada bir düğüme tıkla → o cihaz/servis detayı burada görünür.</div>
+      </div>
+    </section>
+
+    <!-- ---------------------- TARAMA MERKEZİ ---------------------- -->
+    <section class="panel" id="p-tarama">
+      <div class="panelBaslik">
+        <h2>📡 TARAMA MERKEZİ</h2>
+        <p>Gerçek TCP taraması · nmap varsa servis/versiyon tespiti · kapsam onayı zorunlu</p>
+      </div>
+      <div class="kart">
+        <div class="formSira">
+          <label>HEDEFLER <span class="soluk">(virgülle: 192.168.1.0/24, 10.0.0.15, localhost)</span>
+            <input type="text" id="hedef" placeholder="192.168.1.0/24">
+          </label>
+          <label>PORT SETİ
+            <select id="portMod">
+              <option value="hizli">HIZLI — ~100 yaygın port</option>
+              <option value="web">WEB — yalnız web portları</option>
+              <option value="yaygin">YAYGIN — 1-1024</option>
+              <option value="tam">TAM — 1-65535 (uzun sürer)</option>
+            </select>
+          </label>
+          <label>EK PORTLAR <span class="soluk">(ör. 8080,9000-9100)</span>
+            <input type="text" id="ekPort" placeholder="">
+          </label>
+        </div>
+        <div class="formSira">
+          <label class="onay"><input type="checkbox" id="nmapKullan" checked> nmap kullan (varsa servis/versiyon)</label>
+          <label class="onay"><input type="checkbox" id="bannerCek" checked> banner/servis tespiti</label>
+        </div>
+        <div class="dugSira">
+          <button class="dug buyuk birincil" id="taraBasla">▶ TARAMAYI BAŞLAT</button>
+          <button class="dug buyuk" id="taraDurdur">■ DURDUR</button>
+          <button class="dug" id="hedefKendi">⤓ KENDİ AĞIMI DOLDUR</button>
+        </div>
+        <div class="ilerleme"><div class="ilerlemeCubuk" id="ilerlemeCubuk"></div><span id="ilerlemeYazi">hazır</span></div>
+      </div>
+      <div class="ikili">
+        <div class="kart">
+          <h3>TARAMA AKIŞI</h3>
+          <div class="logKutu" id="taramaLog">hazır…</div>
+        </div>
+        <div class="kart">
+          <h3>BULUNAN CİHAZLAR <span class="soluk" id="cihazToplam">0</span></h3>
+          <div class="liste" id="cihazListesi"><div class="bos">Henüz tarama yapılmadı.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------- ALARM & TRİYAJ ---------------------- -->
+    <section class="panel" id="p-alarm">
+      <div class="panelBaslik">
+        <h2>🚨 ALARM &amp; TRİYAJ</h2>
+        <p>Önem sırasına göre önceliklendirme · yanlış pozitif işaretleme · öneri ve kanıt</p>
+      </div>
+      <div class="kart">
+        <div class="suzgec">
+          <button class="cip sec" data-onem="hepsi">HEPSİ</button>
+          <button class="cip" data-onem="kritik">KRİTİK</button>
+          <button class="cip" data-onem="yuksek">YÜKSEK</button>
+          <button class="cip" data-onem="orta">ORTA</button>
+          <button class="cip" data-onem="bilgi">BİLGİ</button>
+          <span class="soluk" id="alarmSayac">0 alarm</span>
+        </div>
+        <div class="liste" id="alarmListesi"><div class="bos">Alarm yok — önce tarama yap.</div></div>
+      </div>
+    </section>
+
+    <!-- ---------------------- IOC KASASI ---------------------- -->
+    <section class="panel" id="p-ioc">
+      <div class="panelBaslik">
+        <h2>🧬 IOC KASASI</h2>
+        <p>Banner ve log içinden çıkarılan iz göstergeleri: IP, alan adı, URL, hash, CVE</p>
+      </div>
+      <div class="kart">
+        <div class="suzgec" id="iocSuzgec"></div>
+        <div class="dugSira">
+          <button class="dug" id="iocKopyala">⧉ PANoya KOPYALA</button>
+          <button class="dug" id="iocIndir">⤓ CSV İNDİR</button>
+          <span class="soluk" id="iocSayac">0 kayıt</span>
+        </div>
+        <div class="liste mono" id="iocListesi"><div class="bos">Tarama veya log analizi yapılmadı.</div></div>
+      </div>
+    </section>
+
+    <!-- ---------------------- DÜNYA HARİTASI ---------------------- -->
+    <section class="panel" id="p-dunya">
+      <div class="panelBaslik">
+        <h2>🌍 DÜNYA HARİTASI · IP KONUM</h2>
+        <p>Taranan adreslerin coğrafi konumu · kendi çıkış adresin · özel (yerel) adresler ayrı işaretlenir</p>
+      </div>
+      <div class="kart">
+        <div class="yuzeyKontrol">
+          <button class="dug" id="dunyaYenile">⟳ KONUMLARI YENİLE</button>
+          <label class="onay"><input type="checkbox" id="dunyaIsim" checked> ülke adları</label>
+          <label class="onay"><input type="checkbox" id="dunyaCizgi"> kendi konumuna çizgi</label>
+          <span class="soluk" id="dunyaSayac">0 konum</span>
+        </div>
+        <canvas id="dunyaTuval" height="480"></canvas>
+        <div class="haritaAlt" id="dunyaListe"></div>
+      </div>
+    </section>
+
+    <!-- ---------------------- LOG / SIEM ---------------------- -->
+    <section class="panel" id="p-log">
+      <div class="panelBaslik">
+        <h2>📜 LOG / SIEM ANALİZİ</h2>
+        <p>auth.log, syslog veya Windows olay günlüğü satırlarını çöz · kural eşleştir · IOC çıkar</p>
+      </div>
+      <div class="kart">
+        <div class="dugSira">
+          <label class="dug dosyaDug">📂 LOG DOSYASI SEÇ<input type="file" id="logDosya" accept=".log,.txt,.csv"></label>
+          <button class="dug" id="logOrnek">ÖRNEK LOG YÜKLE</button>
+          <button class="dug birincil" id="logCoz">▶ ÇÖZÜMLE</button>
+          <button class="dug" id="logTemizle">✕ TEMİZLE</button>
+        </div>
+        <textarea id="logMetin" spellcheck="false" placeholder="log satırlarını buraya yapıştır…"></textarea>
+      </div>
+      <div class="ikili">
+        <div class="kart"><h3>BULGULAR</h3><div class="liste" id="logBulgular"><div class="bos">Analiz bekleniyor.</div></div></div>
+        <div class="kart"><h3>ÖZET</h3><div class="liste mono" id="logOzet"><div class="bos">—</div></div></div>
+      </div>
+    </section>
+
+    <!-- ---------------------- OLAY MÜDAHALESİ ---------------------- -->
+    <section class="panel" id="p-olay">
+      <div class="panelBaslik">
+        <h2>🛡️ OLAY MÜDAHALESİ</h2>
+        <p>Altı adımlı müdahale akışı · her adımın kanıtı ve tamamlanma durumu kaydedilir</p>
+      </div>
+      <div class="kart">
+        <div class="adimlar" id="olayAdimlar"></div>
+        <div class="dugSira">
+          <button class="dug birincil" id="olayKaydet">💾 AKIŞI KAYDET</button>
+          <button class="dug" id="olaySifirla">↺ SIFIRLA</button>
+          <span class="soluk" id="olayDurum">0/6 adım</span>
+        </div>
+      </div>
+      <div class="kart">
+        <h3>OLAY KAYDI (ZAMAN ÇİZELGESİ)</h3>
+        <div class="liste mono" id="olayKayit"><div class="bos">Henüz kayıt yok.</div></div>
+      </div>
+    </section>
+
+    <!-- ---------------------- ZAFİYET & ÖNERİ ---------------------- -->
+    <section class="panel" id="p-zafiyet">
+      <div class="panelBaslik">
+        <h2>🧰 ZAFİYET &amp; ÖNERİ MOTORU</h2>
+        <p>Açık portlara göre sertleştirme önerileri · hazır nmap/sigma komutları · kopyala-çalıştır</p>
+      </div>
+      <div class="kart">
+        <div class="liste" id="zafiyetListe"><div class="bos">Tarama sonrası dolar.</div></div>
+      </div>
+      <div class="kart">
+        <h3>KOMUT ÜRETİCİ</h3>
+        <div class="formSira">
+          <label>ARAÇ
+            <select id="komutArac">
+              <option value="nmap-sV">nmap servis/versiyon</option>
+              <option value="nmap-vuln">nmap zafiyet betikleri</option>
+              <option value="sigma">Sigma kuralı (tespit)</option>
+              <option value="ufw">UFW kural önerisi (Kali/Linux)</option>
+              <option value="powershell">PowerShell güvenlik duvarı kuralı</option>
+            </select>
+          </label>
+          <label>HEDEF / IP<input type="text" id="komutHedef" placeholder="10.0.0.15"></label>
+        </div>
+        <pre class="komut" id="komutCikti">hedef yaz → komut üretilecek</pre>
+        <div class="dugSira"><button class="dug" id="komutKopya">⧉ KOPYALA</button></div>
+      </div>
+    </section>
+
+    <!-- ---------------------- RAPOR ---------------------- -->
+    <section class="panel" id="p-rapor">
+      <div class="panelBaslik">
+        <h2>📄 RAPOR &amp; KANIT</h2>
+        <p>Kanıt zinciri (sha256) · JSON/TXT dışa aktarma · yazdırılabilir rapor</p>
+      </div>
+      <div class="kart">
+        <div class="dugSira">
+          <button class="dug birincil" id="raporTxt">⤓ RAPOR (TXT)</button>
+          <button class="dug" id="raporJson">⤓ HAM VERİ (JSON)</button>
+          <button class="dug" id="raporYazdir">🖨️ YAZDIR</button>
+        </div>
+        <div class="liste mono" id="raporBilgi"><div class="bos">Tarama yapılmadı.</div></div>
+        <pre class="komut" id="raporOnizleme">rapor önizlemesi tarama sonrası dolar</pre>
+      </div>
+    </section>
+
+    <!-- ---------------------- AYARLAR ---------------------- -->
+    <section class="panel" id="p-ayar">
+      <div class="panelBaslik">
+        <h2>⚙️ AYARLAR &amp; KAPSAM ONAYI</h2>
+        <p>Yasal kapsam · otomatik yenileme · arayüz tercihleri · sistem bilgisi</p>
+      </div>
+      <div class="kart yasalKart">
+        <h3>⚖️ YASAL KAPSAM ONAYI</h3>
+        <p class="yasalMetin">
+          Bu araç yalnız <b>sahibi olduğunuz</b> veya <b>yazılı izin aldığınız</b> sistemlerde kullanılır.
+          İzinsiz port taraması, servis keşfi ve zafiyet kontrolü Türk Ceza Kanunu 243/244 kapsamında suçtur;
+          ayrıca hedef ülkenin kanunları da bağlayıcıdır. Tarama kayıtları cihazınızda tutulur ve hiçbir yere gönderilmez.
+        </p>
+        <label class="onay"><input type="checkbox" id="kapsamOnay"> Yukarıdaki kapsamı okudum; tarama yapacağım sistemlerin sahibi olduğumu veya yazılı izin aldığımı beyan ederim.</label>
+        <div class="formSira">
+          <label>İZİN VERİLEN HEDEFLER <span class="soluk">(virgülle: kendi ağın, izinli sunucu)</span>
+            <input type="text" id="kapsamMetin" placeholder="192.168.1.0/24, 10.0.0.5">
+          </label>
+        </div>
+        <div class="dugSira"><button class="dug birincil" id="kapsamKaydet">💾 KAPSAMI KAYDET</button><span class="soluk" id="kapsamDurum">onay bekleniyor</span></div>
+      </div>
+      <div class="kart">
+        <h3>SİSTEM DURUMU</h3>
+        <div class="liste mono" id="ayarDurum">okunuyor…</div>
+        <div class="dugSira">
+          <button class="dug" id="ayarYenile">⟳ DURUMU YENİLE</button>
+          <button class="dug" id="ayarTema">🎨 TEMA SEÇ</button>
+        </div>
+      </div>
+      <div class="kart">
+        <h3>NASIL ÇALIŞIR?</h3>
+        <div class="liste">
+          <div class="madde"><b>1 · Windows / Kali</b><span>python ustad-osint.py → arayüz http://127.0.0.1:8787 (yerel arka uç gerçek taramayı yapar).</span></div>
+          <div class="madde"><b>2 · Telefon (APK)</b><span>Aynı arayüz gömülüdür; tarama telefonun kendi soket motoruyla, WebView köprüsü üzerinden yapılır.</span></div>
+          <div class="madde"><b>3 · nmap farkı</b><span>nmap varsa sürüm/servis bilgisi daha zengindir; yoksa yerleşik soket motoru kullanılır.</span></div>
+          <div class="madde"><b>4 · Veri</b><span>Hiçbir veri dışarı gönderilmez; yalnız IP konum çözümü için ipwho.is sorgulanır (kapalıysa harita boş kalır).</span></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================ OSINT GÖSTERGE ============================ -->
+    <section class="panel" id="p-osint">
+      <div class="sekmeler" id="osSekmeler">
+        <button class="sekme sec" data-sekme="hizli">Hızlı Tarama</button>
+        <button class="sekme" data-sekme="detay">Detaylı Analiz</button>
+        <button class="sekme" data-sekme="ozel">Özel Arama</button>
+        <button class="sekme" data-sekme="toplu">Toplu Tarama</button>
+        <button class="sekme" data-sekme="rapor">Rapor Oluştur</button>
+      </div>
+
+      <div class="araAlan">
+        <div class="araSatir">
+          <div class="araKutu">
+            <i>🌐</i>
+            <input type="text" id="osHedef" placeholder="example.com · 8.8.8.8 · https://site.com" autocomplete="off">
+          </div>
+          <button class="araDug" id="osBasla">▶ TARAMA BAŞLAT</button>
+        </div>
+        <div class="modKutular" id="osModuller">
+          <label class="modKutu"><input type="checkbox" data-mod="subdomain" checked> Subdomain</label>
+          <label class="modKutu"><input type="checkbox" data-mod="dns" checked> DNS</label>
+          <label class="modKutu"><input type="checkbox" data-mod="whois" checked> WHOIS</label>
+          <label class="modKutu"><input type="checkbox" data-mod="ip" checked> IP/ASN</label>
+          <label class="modKutu"><input type="checkbox" data-mod="webtek" checked> Web Teknoloji</label>
+          <label class="modKutu"><input type="checkbox" data-mod="sosyal"> Sosyal Medya</label>
+          <label class="modKutu"><input type="checkbox" data-mod="github"> GitHub</label>
+          <label class="modKutu"><input type="checkbox" data-mod="sizinti" checked> Veri Sızıntısı</label>
+          <label class="modKutu"><input type="checkbox" data-mod="cloud" checked> Cloud</label>
+          <label class="modKutu"><input type="checkbox" data-mod="tehdit" checked> Tehdit</label>
+          <label class="modKutu"><input type="checkbox" id="osTumModul"> Tüm Modüller</label>
+        </div>
+        <div id="osIlerleme" style="display:none">
+          <div class="ilerlemeCizgi"><i id="osIlerlemeCubuk" style="width:6%"></i></div>
+          <div class="sonucYazi" id="osIlerlemeYazi">hazırlanıyor…</div>
+        </div>
+      </div>
+
+      <div class="osKartlar" id="osKartlar">
+        <div class="osKart" style="--ton:#4f9dff"><div class="osIkon">🌐</div><div><div class="deger" id="osSaySubdomain">0</div><div class="ad">Subdomain</div><div class="alt">keşfedildi</div></div></div>
+        <div class="osKart" style="--ton:#2ee6a8"><div class="osIkon">📇</div><div><div class="deger" id="osSayIp">0</div><div class="ad">IP Adresi</div><div class="alt">tespit edildi</div></div></div>
+        <div class="osKart" style="--ton:#ff5470"><div class="osIkon">🔌</div><div><div class="deger" id="osSayServis">0</div><div class="ad">Açık Servis</div><div class="alt">bulundu</div></div></div>
+        <div class="osKart" style="--ton:#8b5cf6"><div class="osIkon">✉️</div><div><div class="deger" id="osSayEposta">0</div><div class="ad">E-posta</div><div class="alt">keşfedildi</div></div></div>
+        <div class="osKart" style="--ton:#ff8f00"><div class="osIkon">📄</div><div><div class="deger" id="osSaySizinti">0</div><div class="ad">Veri Sızıntısı</div><div class="alt">tespit edildi</div></div></div>
+        <div class="osKart" style="--ton:#60a5fa"><div class="osIkon">☁️</div><div><div class="deger" id="osSayCloud">0</div><div class="ad">Cloud Servis</div><div class="alt">bulundu</div></div></div>
+      </div>
+
+      <div class="osIzgara">
+        <div class="osKutu">
+          <div class="osKutuBaslik"><i>🕸️</i> Saldırı Yüzeyi Haritası <span class="sag" id="osGrafNot">bekliyor</span></div>
+          <div class="osHarita" id="osGrafKap"><canvas id="osGraf"></canvas></div>
+        </div>
+        <div class="osKutu">
+          <div class="osKutuBaslik"><i>🌍</i> Dünya Haritası — IP Konumları <span class="sag" id="osHaritaNot">bekliyor</span></div>
+          <div class="osHarita" id="osHaritaKap">
+            <canvas id="osHarita"></canvas>
+            <div class="ulkeListe" id="osUlkeListe"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="osIzgara uc">
+        <div class="osKutu">
+          <div class="osKutuBaslik"><i>📑</i> Son Bulunan Bulgular <span class="sag" id="osBulguNot">0 kayıt</span></div>
+          <div class="osKutuGovde" id="osBulgular"><div class="osIskelet">Henüz tarama yapılmadı.</div></div>
+        </div>
+        <div class="osKutu">
+          <div class="osKutuBaslik"><i>🧬</i> Teknolojiler <span class="sag" id="osTekNot">0</span></div>
+          <div class="osKutuGovde" id="osTeknoloji"><div class="osIskelet">—</div></div>
+        </div>
+        <div class="osKutu">
+          <div class="osKutuBaslik"><i>🔌</i> Açık Portlar <span class="sag" id="osPortNot">0</span></div>
+          <div class="osKutuGovde" id="osPortlar"><div class="osIskelet">—</div></div>
+        </div>
+      </div>
+
+      <div class="raporSerit">
+        <button class="rapDug" id="osRaporHtml">📄 HTML Rapor</button>
+        <button class="rapDug" id="osRaporJson">🗂️ JSON Veri</button>
+        <button class="rapDug" id="osRaporCsv">📊 CSV Verisi</button>
+        <button class="rapDug" id="osRaporEkran">🖼️ Ekran Görüntüsü</button>
+        <button class="rapDug ana" id="osRaporTum">📄 TÜM SONUÇLARI RAPORLA</button>
+      </div>
+    </section>
+
+    <!-- ---------------------------- OSINT Arama ---------------------------- -->
+    <section class="panel" id="p-osarama">
+      <div class="modBaslik" style="--ton:#37e0ff">
+        <div class="mIkon">🔎</div>
+        <div><h2>OSINT Arama</h2><p>Hedef hakkında tüm modülleri tek seferde çalıştırır</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="osaramaGirdi" placeholder="alan adı, IP veya URL" autocomplete="off">
+        <button class="modDug" id="osaramaDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="osaramaDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="osaramaOzet"></span></div>
+        <div class="osKutuGovde" id="osaramaSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- Domain Keşfi ---------------------------- -->
+    <section class="panel" id="p-domain">
+      <div class="modBaslik" style="--ton:#4f9dff">
+        <div class="mIkon">🌐</div>
+        <div><h2>Domain Keşfi</h2><p>Alan adının DNS kayıtları, WHOIS özeti ve web durumu</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="domainGirdi" placeholder="ornek.com" autocomplete="off">
+        <button class="modDug" id="domainDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="domainDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="domainOzet"></span></div>
+        <div class="osKutuGovde" id="domainSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- Subdomain Tarama ---------------------------- -->
+    <section class="panel" id="p-subdomain">
+      <div class="modBaslik" style="--ton:#8b5cf6">
+        <div class="mIkon">🧩</div>
+        <div><h2>Subdomain Tarama</h2><p>Sertifika şeffaflığı ve pasif DNS kaynaklarıyla alt alan keşfi</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="subdomainGirdi" placeholder="ornek.com" autocomplete="off">
+        <button class="modDug" id="subdomainDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="subdomainDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="subdomainOzet"></span></div>
+        <div class="osKutuGovde" id="subdomainSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- IP / ASN Analizi ---------------------------- -->
+    <section class="panel" id="p-ipasn">
+      <div class="modBaslik" style="--ton:#2ee6a8">
+        <div class="mIkon">📡</div>
+        <div><h2>IP / ASN Analizi</h2><p>Konum, ISS, ASN, ağ bloğu, proxy/hosting göstergeleri</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="ipasnGirdi" placeholder="8.8.8.8" autocomplete="off">
+        <button class="modDug" id="ipasnDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="ipasnDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="ipasnOzet"></span></div>
+        <div class="osKutuGovde" id="ipasnSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- WHOIS / RDAP ---------------------------- -->
+    <section class="panel" id="p-whois">
+      <div class="modBaslik" style="--ton:#ffc107">
+        <div class="mIkon">📋</div>
+        <div><h2>WHOIS / RDAP</h2><p>Tescil bilgileri, kayıtçı, ad sunucuları, süre ve askı durumu</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="whoisGirdi" placeholder="ornek.com" autocomplete="off">
+        <button class="modDug" id="whoisDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="whoisDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="whoisOzet"></span></div>
+        <div class="osKutuGovde" id="whoisSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- DNS Analizi ---------------------------- -->
+    <section class="panel" id="p-dns">
+      <div class="modBaslik" style="--ton:#00d4a0">
+        <div class="mIkon">🗂️</div>
+        <div><h2>DNS Analizi</h2><p>A, AAAA, MX, TXT, NS, SOA, CAA, SRV kayıtları + SPF/DMARC denetimi</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="dnsGirdi" placeholder="ornek.com" autocomplete="off">
+        <button class="modDug" id="dnsDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="dnsDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="dnsOzet"></span></div>
+        <div class="osKutuGovde" id="dnsSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- E-posta İstihbaratı ---------------------------- -->
+    <section class="panel" id="p-eposta">
+      <div class="modBaslik" style="--ton:#ff8f00">
+        <div class="mIkon">✉️</div>
+        <div><h2>E-posta İstihbaratı</h2><p>MX, SPF, tek kullanımlık servis, rol hesabı, Gravatar izi</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="epostaGirdi" placeholder="isim@ornek.com" autocomplete="off">
+        <button class="modDug" id="epostaDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="epostaDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="epostaOzet"></span></div>
+        <div class="osKutuGovde" id="epostaSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- Sosyal Medya ---------------------------- -->
+    <section class="panel" id="p-sosyal">
+      <div class="modBaslik" style="--ton:#ff5470">
+        <div class="mIkon">👥</div>
+        <div><h2>Sosyal Medya</h2><p>Kullanıcı adının platformlardaki varlığı ve profil bağlantıları</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="sosyalGirdi" placeholder="kullanici_adi" autocomplete="off">
+        <button class="modDug" id="sosyalDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="sosyalDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="sosyalOzet"></span></div>
+        <div class="osKutuGovde" id="sosyalSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- Kullanıcı Adı Arama ---------------------------- -->
+    <section class="panel" id="p-kullanici">
+      <div class="modBaslik" style="--ton:#e879f9">
+        <div class="mIkon">🧍</div>
+        <div><h2>Kullanıcı Adı Arama</h2><p>25+ platformda hesap varlığı (durum + içerik işareti)</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="kullaniciGirdi" placeholder="kullanici_adi" autocomplete="off">
+        <button class="modDug" id="kullaniciDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="kullaniciDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="kullaniciOzet"></span></div>
+        <div class="osKutuGovde" id="kullaniciSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- GitHub İstihbaratı ---------------------------- -->
+    <section class="panel" id="p-github">
+      <div class="modBaslik" style="--ton:#a9c2d6">
+        <div class="mIkon">🐙</div>
+        <div><h2>GitHub İstihbaratı</h2><p>Profil, depolar, diller, kurumlar ve commit e-posta sızıntısı</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="githubGirdi" placeholder="torvalds" autocomplete="off">
+        <button class="modDug" id="githubDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="githubDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="githubOzet"></span></div>
+        <div class="osKutuGovde" id="githubSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- Web Teknolojileri ---------------------------- -->
+    <section class="panel" id="p-webtek">
+      <div class="modBaslik" style="--ton:#22d3ee">
+        <div class="mIkon">🧬</div>
+        <div><h2>Web Teknolojileri</h2><p>Sunucu, CMS, dil, analitik, güvenlik başlıkları ve TLS sertifikası</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="webtekGirdi" placeholder="https://site.com" autocomplete="off">
+        <button class="modDug" id="webtekDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="webtekDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="webtekOzet"></span></div>
+        <div class="osKutuGovde" id="webtekSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- Cloud Keşfi ---------------------------- -->
+    <section class="panel" id="p-cloud">
+      <div class="modBaslik" style="--ton:#60a5fa">
+        <div class="mIkon">☁️</div>
+        <div><h2>Cloud Keşfi</h2><p>S3 / GCS / Azure kova varlık ve açıklık kontrolü</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="cloudGirdi" placeholder="ornek.com" autocomplete="off">
+        <button class="modDug" id="cloudDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="cloudDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="cloudOzet"></span></div>
+        <div class="osKutuGovde" id="cloudSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- Veri Sızıntısı Tespiti ---------------------------- -->
+    <section class="panel" id="p-sizinti">
+      <div class="modBaslik" style="--ton:#f43f5e">
+        <div class="mIkon">💧</div>
+        <div><h2>Veri Sızıntısı Tespiti</h2><p>Açık .env/.git/yedek/konfig probu — yumuşak 404 ayıklamalı</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="sizintiGirdi" placeholder="https://site.com" autocomplete="off">
+        <button class="modDug" id="sizintiDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="sizintiDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="sizintiOzet"></span></div>
+        <div class="osKutuGovde" id="sizintiSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- Dark Web Arama ---------------------------- -->
+    <section class="panel" id="p-darkweb">
+      <div class="modBaslik" style="--ton:#7c3aed">
+        <div class="mIkon">🕶️</div>
+        <div><h2>Dark Web Arama</h2><p>Sızıntı kaydı sorgusu (HIBP anahtarı) + dork bağlantıları</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="darkwebGirdi" placeholder="isim@ornek.com" autocomplete="off">
+        <button class="modDug" id="darkwebDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="darkwebDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="darkwebOzet"></span></div>
+        <div class="osKutuGovde" id="darkwebSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- Tehdit Haritası ---------------------------- -->
+    <section class="panel" id="p-tehdit">
+      <div class="modBaslik" style="--ton:#ef4444">
+        <div class="mIkon">🔥</div>
+        <div><h2>Tehdit Haritası</h2><p>Botnet C2, phishing ve ele geçirilmiş sistem beslemeleri</p></div>
+      </div>
+      <div class="modForm">
+        <input type="text" id="tehditGirdi" placeholder="boş bırak — tüm beslemeler" autocomplete="off">
+        <button class="modDug" id="tehditDug">▶ ÇALIŞTIR</button>
+        <span class="sonucYazi" id="tehditDurum"></span>
+      </div>
+      <div class="osKutu" style="margin-bottom:11px"><div class="osKutuBaslik"><i>🌍</i> Tehdit Konumları <span class="sag" id="tehditHaritaNot">besleme bekleniyor</span></div>
+        <div class="osHarita" id="tehditHaritaKap"><canvas id="tehditHarita"></canvas><div class="ulkeListe" id="tehditUlkeListe"></div></div></div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📊</i> Sonuçlar <span class="sag" id="tehditOzet"></span></div>
+        <div class="osKutuGovde" id="tehditSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- RAPORLAR ---------------------------- -->
+    <section class="panel" id="p-osrapor">
+      <div class="modBaslik" style="--ton:#d4af37">
+        <div class="mIkon">📑</div>
+        <div><h2>Raporlar</h2><p>Tarama ve OSINT bulgularını belgeye dönüştür</p></div>
+      </div>
+      <div class="osIzgara">
+        <div class="osKutu"><div class="osKutuBaslik"><i>🧾</i> Kayıtlı taramalar</div>
+          <div class="osKutuGovde" id="osRaporListe"><div class="osIskelet">yükleniyor…</div></div></div>
+        <div class="osKutu"><div class="osKutuBaslik"><i>📦</i> OSINT özeti</div>
+          <div class="osKutuGovde" id="osRaporOzet"><div class="osIskelet">Henüz OSINT taraması yapılmadı.</div></div></div>
+      </div>
+      <div class="raporSerit">
+        <button class="rapDug" id="osRaporHtml2">📄 HTML Rapor</button>
+        <button class="rapDug" id="osRaporJson2">🗂️ JSON Veri</button>
+        <button class="rapDug" id="osRaporCsv2">📊 CSV Verisi</button>
+        <button class="rapDug ana" id="osRaporTum2">📄 TÜM SONUÇLARI RAPORLA</button>
+      </div>
+    </section>
+<!-- ===== EK ARAÇLAR v1.5 (pasif radar, cve, arşiv, takeover, savunma, toplu, terminal, kanıt) ===== -->
+    <!-- ---------------------------- PASİF RADAR ---------------------------- -->
+    <section class="panel" id="p-pasif">
+      <div class="modBaslik" style="--ton:#00ffa3">
+        <div class="mIkon">🛰️</div>
+        <div><h2>Pasif Radar (Hedefe Dokunmadan)</h2><p>İnternetten görünen portlar, teknolojiler ve bilinen zafiyetler</p></div>
+      </div>
+      <div class="osIpucu">
+        <b>Ne işe yarar?</b> Hedefe <u>hiç istek göndermeden</u> dışarıdan görünen açık portları, o portlardaki teknolojileri ve bilinen zafiyetleri listeler — hedef sistem bu sorguyu görmez, log'a düşmez.
+        <span class="ornek">Örnek: <b>ustadkenankuzucu.com.tr</b> → IP 213.238.183.223 · 8 port (53/80/443/3306…) · Exim CVE-2026-45185 <b>CVSS 9.8</b> "dışarıdan görünüyor" bilgisi geldi.</span>
+        <span class="not">Kaynak: internetdb.shodan.io + MITRE CVE (anahtarsız). Yalnız sahibi olduğun sistemler için.</span>
+      </div>
+      <div class="modForm">
+        <input type="text" id="pasifGirdi" placeholder="ornek.com veya 1.1.1.1" autocomplete="off">
+        <button class="modDug" id="pasifDug">▶ PASİF TARA</button>
+        <button class="modDug ekIkincil" id="pasifZorla">↻ YENİLE</button>
+        <span class="sonucYazi" id="pasifDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>📡</i> Dışarıdan görünenler <span class="sag" id="pasifOzet"></span></div>
+        <div class="osKutuGovde" id="pasifSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- CVE EŞLEŞTİRME ---------------------------- -->
+    <section class="panel" id="p-cve">
+      <div class="modBaslik" style="--ton:#ff5d5d">
+        <div class="mIkon">🧨</div>
+        <div><h2>CVE Eşleştirme (Teknoloji → Zafiyet)</h2><p>Tespit edilen ürün/sürüm ile NVD kayıtlarını eşler</p></div>
+      </div>
+      <div class="osIpucu">
+        <b>Ne işe yarar?</b> Web Teknolojileri panelinin bulduğu ürün adı + sürümü yazın; o sürümle ilgili <b>bilinen açıkları (CVE)</b> CVSS puanıyla listeler. Sürümün geçtiği kayıtlar en üste gelir.
+        <span class="ornek">Örnek: <b>nginx 1.24.0</b> → NVD'de 120 kayıt, açıklamasında 1.24 geçenler öne alınır. <b>wordpress 6.4</b> → 120 kayıt.</span>
+        <span class="not">Kaynak: NVD CVE API (anahtarsız). "Olası eşleşme"dir; kesin sonuç için sürüm aralığı doğrulanmalı.</span>
+      </div>
+      <div class="modForm">
+        <input type="text" id="cveGirdi" placeholder="ürün: nginx, wordpress, openssh…" autocomplete="off">
+        <input type="text" id="cveSurum" placeholder="sürüm (isteğe bağlı): 1.24.0" autocomplete="off" style="max-width:200px">
+        <button class="modDug" id="cveDug">▶ EŞLEŞTİR</button>
+        <span class="sonucYazi" id="cveDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>🧨</i> Eşleşen kayıtlar <span class="sag" id="cveOzet"></span></div>
+        <div class="osKutuGovde" id="cveSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- ARŞİV & GÖRÜNTÜ ---------------------------- -->
+    <section class="panel" id="p-arsiv">
+      <div class="modBaslik" style="--ton:#ffb400">
+        <div class="mIkon">🕰️</div>
+        <div><h2>Arşiv &amp; Ekran Görüntüsü</h2><p>Wayback Machine geçmişi + urlscan.io gerçek taramaları</p></div>
+      </div>
+      <div class="osIpucu">
+        <b>Ne işe yarar?</b> Sitenin <b>eski sürümlerini, silinmiş sayfalarını</b> ve başkalarının yaptığı gerçek taramaların <b>ekran görüntüsünü/DOM'unu</b> gösterir. Silinmiş ama sunucuda kalmış yollar (ör. /admin, /eski-panel) buradan çıkar.
+        <span class="ornek">Örnek: <b>example.com</b> → 200 arşiv kaydı, ilk kayıt 2002, son 2021. urlscan.io'da 10 gerçek tarama (IP + ekran görüntüsü bağlantısıyla).</span>
+        <span class="not">Kaynak: archive.org CDX + urlscan.io (anahtarsız).</span>
+      </div>
+      <div class="modForm">
+        <input type="text" id="arsivGirdi" placeholder="ornek.com" autocomplete="off">
+        <button class="modDug" id="arsivDug">▶ ARŞİVİ AÇ</button>
+        <span class="sonucYazi" id="arsivDurum"></span>
+      </div>
+      <div class="osIzgara">
+        <div class="osKutu"><div class="osKutuBaslik"><i>🗄️</i> Wayback geçmişi <span class="sag" id="arsivOzet"></span></div>
+          <div class="osKutuGovde" id="arsivSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+        <div class="osKutu"><div class="osKutuBaslik"><i>📸</i> urlscan.io taramaları <span class="sag" id="urlscanOzet"></span></div>
+          <div class="osKutuGovde" id="urlscanSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+      </div>
+    </section>
+
+    <!-- ---------------------------- SUBDOMAIN TAKEOVER ---------------------------- -->
+    <section class="panel" id="p-takeover">
+      <div class="modBaslik" style="--ton:#c084fc">
+        <div class="mIkon">🧲</div>
+        <div><h2>Subdomain Takeover Taraması</h2><p>Sahipsiz CNAME'ler: silinmiş servise bakan alt alanlar</p></div>
+      </div>
+      <div class="osIpucu">
+        <b>Ne işe yarar?</b> Bir alt alan adı (ör. <b>eski.magaza.com</b>) kapanmış bir servise (Shopify, GitHub Pages, Heroku…) CNAME ile bakıyorsa, o servis hesabı yeniden açan biri siteyi <b>ele geçirebilir</b>. Bu panel imzayı arayıp "risk yüksek" der.
+        <span class="ornek">Örnek: eski.magaza.com → silinmiş Shopify mağazası → "Sorry, this shop is currently unavailable" imzası bulunursa <b>risk: yüksek</b>.</span>
+        <span class="not">Kaynak: dns.google (CNAME zinciri) + 20 servis imzası (anahtarsız).</span>
+      </div>
+      <div class="modForm">
+        <input type="text" id="takeoverGirdi" placeholder="ornek.com" autocomplete="off">
+        <button class="modDug" id="takeoverDug">▶ TARAMA</button>
+        <span class="sonucYazi" id="takeoverDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>🧲</i> Şüpheli alt alanlar <span class="sag" id="takeoverOzet"></span></div>
+        <div class="osKutuGovde" id="takeoverSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- SAVUNMA DUVARI ---------------------------- -->
+    <section class="panel" id="p-savunma">
+      <div class="modBaslik" style="--ton:#33d17a">
+        <div class="mIkon">🛡️</div>
+        <div><h2>Savunma Duvarı (IOC → Güvenlik Duvarı)</h2><p>Ele geçirilmiş sistem listesini Windows kurallarına çevirir</p></div>
+      </div>
+      <div class="osIpucu">
+        <b>Ne işe yarar?</b> Tehdit beslemelerindeki <b>ele geçirilmiş/zararlı IP'leri</b> Windows Güvenlik Duvarı'na ekleyen bir <b>.ps1 betiği</b> üretir; yanında tek tıkla <b>geri alma</b> betiği de var. Yani OSINT burada saldırı değil <b>savunma</b> için çalışır.
+        <span class="ornek">Örnek: canlı testte <b>2409 zararlı IP</b> toplandı (EmergingThreats + Feodo). Betiği yönetici olarak çalıştırınca hepsi engellenir.</span>
+        <span class="not">Kaynak: EmergingThreats + Feodo Tracker (anahtarsız). Yalnız kendi bilgisayarında çalıştır.</span>
+      </div>
+      <div class="modForm">
+        <button class="modDug" id="savunmaDug">▶ LİSTEYİ ÜRET</button>
+        <button class="modDug ekIndir" id="savunmaIndir" disabled>⬇ .PS1 BETİĞİNİ İNDİR</button>
+        <button class="modDug ekIkincil" id="savunmaGeri" disabled>↩ GERİ ALMA BETİĞİ</button>
+        <span class="sonucYazi" id="savunmaDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>🛡️</i> Sonuç <span class="sag" id="savunmaOzet"></span></div>
+        <div class="osKutuGovde" id="savunmaSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- TOPLU TARAMA ---------------------------- -->
+    <section class="panel" id="p-toplu">
+      <div class="modBaslik" style="--ton:#4da3ff">
+        <div class="mIkon">🗃️</div>
+        <div><h2>Toplu Tarama (Çoklu Hedef)</h2><p>Birden çok alan adını sırayla profiller, risk sıralı tablo çıkarır</p></div>
+      </div>
+      <div class="osIpucu">
+        <b>Ne işe yarar?</b> Elindeki bütün alan adlarını tek seferde tarar ve <b>riski en yüksekten aşağıya</b> sıralar. "Hangi sitemde eski panel/scanner var?" sorusunun cevabı tek tabloda.
+        <span class="ornek">Örnek: 5 alan adı yaz → DNS/WHOIS/IP/subdomain/web teknolojisi toplanır, risk puanı 100 üzerinden sıralanır.</span>
+        <span class="not">Her satır için ayrı istek gider; 25 hedefe kadar önerir.</span>
+      </div>
+      <div class="modForm ekFormBlok">
+        <textarea id="topluGirdi" rows="4" placeholder="ornek.com&#10;site2.com&#10;github.com"></textarea>
+        <button class="modDug" id="topluDug">▶ TOPLU TARA</button>
+        <span class="sonucYazi" id="topluDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>🗃️</i> Risk tablosu <span class="sag" id="topluOzet"></span></div>
+        <div class="osKutuGovde" id="topluSonuc"><div class="osIskelet">Sonuç bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- MİNİ TERMİNAL ---------------------------- -->
+    <section class="panel" id="p-terminal">
+      <div class="modBaslik" style="--ton:#00ff66">
+        <div class="mIkon">⌨️</div>
+        <div><h2>Mini Terminal</h2><p>Tek satırda OSINT: scan · dns · whois · ip · pasif · cve · arşiv · takeover · leak</p></div>
+      </div>
+      <div class="osIpucu">
+        <b>Ne işe yarar?</b> Panel panel gezmeden komutla çalıştırma. Yaz <b>yardım</b> ile komut listesi gelir.
+        <span class="ornek">Örnekler: <b>scan ustadkenankuzucu.com.tr</b> · <b>dns example.com</b> · <b>pasif 1.1.1.1</b> · <b>cve nginx 1.24.0</b> · <b>arsiv example.com</b> · <b>takeover ornek.com</b> · <b>leak mail@ornek.com</b> · <b>kanit</b></span>
+        <span class="not">Yazdığın her komut geçmişe eklenir (↑ / ↓ tuşları çalışır).</span>
+      </div>
+      <div class="ekTerminal" id="termKutu">
+        <div class="ekTerminalGovde" id="termCikti"><div class="ekTermSatir ekBilgi">ÜSTAD OSINT terminali hazır. "yardım" yaz.</div></div>
+        <div class="ekTermGirdi">
+          <span class="ekTermImlec">ustad@osint:~$</span>
+          <input type="text" id="termGirdi" autocomplete="off" spellcheck="false" placeholder="yardım">
+          <button class="modDug" id="termDug">ÇALIŞTIR</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------- KANIT ZİNCİRİ ---------------------------- -->
+    <section class="panel" id="p-kanit">
+      <div class="modBaslik" style="--ton:#d4af37">
+        <div class="mIkon">🔗</div>
+        <div><h2>Kanıt Zinciri (Değiştirilemez Rapor)</h2><p>Raporun SHA-256 özeti + zaman damgası + zincir mührü</p></div>
+      </div>
+      <div class="osIpucu">
+        <b>Ne işe yarar?</b> Bir raporun <b>sonradan değiştirilmediğini</b> ispatlar: içeriğin SHA-256 özeti alınır, önceki kaydın özetiyle birlikte mühürlenir ve zaman damgasıyla saklanır. Karşı tarafa/mahkemeye "bu rapor aynen böyleydi" deme imkanı verir.
+        <span class="ornek">Örnek: son taramanı mühürle → <b>sha256 a07cb5ac…</b> · mührü değiştirirsen zincir tutmaz.</span>
+        <span class="not">Kayıt: veri/kanit-zinciri.json (cihazında kalır).</span>
+      </div>
+      <div class="modForm">
+        <button class="modDug" id="kanitDug">🔒 SON TARAMAYI MÜHÜRLE</button>
+        <button class="modDug ekIkincil" id="kanitYaz" disabled>⬇ KANIT DOSYASINI İNDİR</button>
+        <span class="sonucYazi" id="kanitDurum"></span>
+      </div>
+      <div class="osKutu"><div class="osKutuBaslik"><i>🔗</i> Zincir kayıtları <span class="sag" id="kanitOzet"></span></div>
+        <div class="osKutuGovde" id="kanitSonuc"><div class="osIskelet">Kayıt bekleniyor…</div></div></div>
+    </section>
+
+    <!-- ---------------------------- DEĞİŞİM (FARK) ---------------------------- -->
+    <section class="panel" id="p-fark">
+      <div class="modBaslik" style="--ton:#ff9f43">
+        <div class="mIkon">⚖️</div>
+        <div><h2>Değişim (Fark) Radarı</h2><p>İki tarama arasında ne değişti: yeni port, yeni alt alan, yeni CVE</p></div>
+      </div>
+      <div class="osIpucu">
+        <b>Ne işe yarar?</b> Sistemlerdeki değişim en önemli sinyaldir: dün olmayan bir port bugün açıldıysa ya yeni bir servis kurdun ya da birisi kurdu. Bu panel iki taramanın farkını <b>yeni açılan / kapanan port, yeni alt alan, yeni CVE, risk değişimi</b> olarak gösterir.
+        <span class="ornek">Örnek: bugün 8 port vardı, yarın 9 olursa <b>"yeni açılan: 8080"</b> diye kırmızı yazar. Pekiştirici: günlük otomatik rapor masaüstünde <b>USTAD-OSINT-RAPORLAR</b> klasörüne yazılır.</span>
+        <span class="not">Kayıt cihazında (tarayıcı belleği) tutulur; APK'da da çalışır. Günlük otomatik tarama: `gunluk-rapor.py`.</span>
+      </div>
+      <div class="modForm">
+        <input type="text" id="farkGirdi" placeholder="ornek.com" autocomplete="off">
+        <button class="modDug" id="farkKaydet">💾 TARAMAYI KAYDET</button>
+        <button class="modDug" id="farkGoster">⚖️ FARKI GÖSTER</button>
+        <button class="modDug ekIkincil" id="farkTemizle">🗑️ GEÇMİŞİ SİL</button>
+        <span class="sonucYazi" id="farkDurum"></span>
+      </div>
+      <div class="osIzgara">
+        <div class="osKutu"><div class="osKutuBaslik"><i>⚖️</i> Fark sonucu <span class="sag" id="farkOzet"></span></div>
+          <div class="osKutuGovde" id="farkSonuc"><div class="osIskelet">Karşılaştırma bekleniyor…</div></div></div>
+        <div class="osKutu"><div class="osKutuBaslik"><i>🕒</i> Kayıtlı anlık görüntüler <span class="sag" id="farkGecmisOzet"></span></div>
+          <div class="osKutuGovde" id="farkGecmis"><div class="osIskelet">Kayıt yok.</div></div></div>
+      </div>
+    </section>
+<!-- v1.6 panelleri -->
+
+    <!-- ==================== v1.6 YENİ NESİL ARAÇLAR ==================== -->
+
+    <section class="panel" id="p-istismar" style="--ton:#ef4444">
+      <div class="panelBaslik">
+        <h2>🚨 AKTİF İSTİSMAR RADARI</h2>
+        <p>CVE <b>gerçekten kullanılıyor mu?</b> CISA KEV (aktif istismar listesi) + FIRST EPSS (istismar olasılığı)</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Zafiyet listeleri çok CVE yazar; bunlardan hangisinin <b>gerçekten saldırıda
+        kullanıldığını</b> söyler. KEV'de olan CVE acil yamanmalıdır; EPSS yüzdesi 30 gün içindeki istismar olasılığıdır.
+        <span class="ornek">Örnek: CVE-2024-3094 → EPSS %86 · yüzdelik 99.7 → "hemen yamala"</span>
+        <span class="ornek">Virgülle çok CVE: CVE-2021-44228, CVE-2023-44487, CVE-2022-22965</span></div>
+      <div class="e2Satir">
+        <input class="e2Girdi genis" id="e2CveGirdi" placeholder="CVE-2024-3094" value="CVE-2024-3094">
+        <button class="dug" id="e2CveDug">🚨 İSTİSMAR DURUMUNU SORGULA</button>
+      </div>
+      <div id="e2IstismarSonuc"><div class="e2Alt">Sorgu bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-postaguv" style="--ton:#37e0ff">
+      <div class="panelBaslik">
+        <h2>📧 E-POSTA SAHTECİLİK KALKANI</h2>
+        <p>SPF · DKIM · DMARC denetimi — biri senin adına sahte mail atabiliyor mu?</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Alan adınızın e-posta kimlik doğrulamasını denetler. DMARC politikası
+        <b>none</b> ise sahte mailler hiçbir engelle karşılaşmadan gelen kutunuza düşebilir (müşterinize sizin adınıza
+        yazılabilir). Panel, kopyalayıp yapıştıracağınız doğru kaydı da verir.
+        <span class="ornek">Örnek: ustadkenankuzucu.com.tr → SPF var, DMARC p=none → "p=quarantine yap" önerisi</span></div>
+      <div class="e2Satir">
+        <input class="e2Girdi genis" id="e2PostaGirdi" placeholder="alan-adi.com" value="ustadkenankuzucu.com.tr">
+        <button class="dug" id="e2PostaDug">📧 POSTA GÜVENLİĞİNİ DENETLE</button>
+      </div>
+      <div id="e2PostaSonuc"><div class="e2Alt">Sorgu bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-baslik" style="--ton:#f59e0b">
+      <div class="panelBaslik">
+        <h2>🔎 MAİL BAŞLIĞI ADLİ ANALİZİ</h2>
+        <p>Şüpheli mailin başlıklarını yapıştır — sahte mi, gerçek mi?</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Mail uygulamasında "Kaynağı göster / Özgün iletiyi indir" ile aldığınız
+        başlıkları buraya yapıştırırsınız. Program SPF/DKIM/DMARC sonucunu, gerçek gönderen IP'yi, sunucu zincirini ve
+        gecikmeleri çıkarıp <b>sahte olabilir</b> kararı verir. Cevap yazmadan önce kesin bilgi.
+        <span class="ornek">Örnek: Reply-To farklı alan adı + SPF fail → risk 85/100 ("YÜKSEK — sahte olabilir")</span></div>
+      <div class="e2Satir"><textarea class="e2Alan" id="e2BaslikAlan" placeholder="From: &quot;ÜSTAD SALON&quot; <bilgi@ornek.com>&#10;Return-Path: <...>&#10;Received: from ...&#10;Authentication-Results: ..."></textarea></div>
+      <div class="e2Satir"><button class="dug" id="e2BaslikDug">🔎 BAŞLIKLARI ÇÖZÜMLE</button>
+        <span class="e2Not">hiçbir veri sunucuya kaydedilmez · çözümleme cihazınızda yapılır</span></div>
+      <div id="e2BaslikSonuc"><div class="e2Alt">Başlık bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-sertifika" style="--ton:#c084fc">
+      <div class="panelBaslik">
+        <h2>📜 SERTİFİKA LOGU (CT) — ALT ALAN KEŞFİ</h2>
+        <p>Sertifika şeffaflık loglarındaki tüm alan adları; crt.sh çöktüğünde yedek kaynak</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Her HTTPS sertifikası halka açık loglara yazılır — sizin haberiniz olmadan
+        açılmış alt alanlar orada görünür. Yeni çıkan adlar (<b>YENİ</b>) uyarı sebebidir.
+        <span class="ornek">Örnek: ustadkenankuzucu.com.tr → 2 sertifika, 6 ad (wildcard dahil)</span></div>
+      <div class="e2Satir">
+        <input class="e2Girdi genis" id="e2SertGirdi" placeholder="alan-adi.com" value="ustadkenankuzucu.com.tr">
+        <button class="dug" id="e2SertDug">📜 SERTİFİKA LOGLARINI TARA</button>
+      </div>
+      <div id="e2SertSonuc"><div class="e2Alt">Sorgu bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-webzaf" style="--ton:#22c55e">
+      <div class="panelBaslik">
+        <h2>🛡️ WEB YAPILANDIRMA DENETİMİ</h2>
+        <p>Yalnız <b>kendi alan adlarınız</b> — hassas dosya sızıntısı, HTTP metotları, CORS, güvenlik başlıkları</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Sitenizde açıkta kalmış <span class="e2Mono">.env</span>/<span class="e2Mono">.git</span>
+        gibi dosyaları, gereksiz açık HTTP metotlarını ve eksik güvenlik başlıklarını (HSTS, CSP, X-Frame) bulur; ardından
+        <b>NGINX ve .htaccess</b> için kopyala-yapıştır düzeltme satırlarını verir.
+        <span class="ornek">Örnek: /.env → HTTP 403 (kapalı ✔) · eksik: strict-transport-security, x-frame-options</span></div>
+      <div class="e2Satir">
+        <input class="e2Girdi genis" id="e2WebGirdi" placeholder="kendi alan adınız" value="ustadkenankuzucu.com.tr">
+        <button class="dug" id="e2WebDug">🛡️ YAPILANDIRMAYI DENETLE</button>
+        <span class="e2Not">kapsam: veri/izleme.json listesi (kendi alan adlarınız)</span>
+      </div>
+      <div id="e2WebSonuc"><div class="e2Alt">Sorgu bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-fidye" style="--ton:#ff2d55">
+      <div class="panelBaslik">
+        <h2>🕵️ FİDYE YAZILIMI RADARI</h2>
+        <p>Son kurbanlar: kim, hangi sektör, hangi grup, teslim tarihi</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Fidye gruplarının sızdırdığı kurban listesini gösterir. Kendi sektörünüzde
+        hareket var mı, hangi grup aktif, hangi ülkeler hedefte — hepsini görürsünüz. Saldırı gelmeden önce tedbir alma sebebi.
+        <span class="ornek">Örnek: 24 saatte 100 kurban · "Technology" sektörü · grup N0n · teslim 2026-09-28</span></div>
+      <div class="e2Satir">
+        <input class="e2Girdi" id="e2FidyeUlke" placeholder="ülke kodu (TR) — boş = hepsi">
+        <button class="dug" id="e2FidyeDug">🕵️ SON KURBANLARI GETİR</button>
+      </div>
+      <div id="e2FidyeSonuc"><div class="e2Alt">Sorgu bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-saldiri" style="--ton:#ff8f00">
+      <div class="panelBaslik">
+        <h2>🌍 CANLI SALDIRI AKIŞI</h2>
+        <p>Dünyada şu an en çok saldıran IP'ler (SANS ISC DShield) — haritada sinyaller canlı akar</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Küresel sensör ağına gelen gerçek saldırı raporlarını listeler; harita
+        üzerinde her saldırgan IP'den ağınıza doğru <b>akan sinyalleri</b> gösterir. "Tehdit sadece bize gelmiyor,
+        dünya sürekli taranıyor" gerçeğini gözle görülür hâle getirir.
+        <span class="ornek">Örnek: 13.94.254.200 → 319.739 saldırı raporu (1. sırada)</span></div>
+      <div class="e2Satir">
+        <button class="dug" id="e2SaldiriDug">🌍 AKIŞI YENİLE</button>
+        <label class="onay"><input type="checkbox" id="e2SaldiriOto"> 60 saniyede bir otomatik yenile</label>
+      </div>
+      <div class="e2HaritaKap" id="e2SaldiriKap"><canvas id="e2SaldiriHarita"></canvas></div>
+      <div id="e2SaldiriSonuc"><div class="e2Alt">Sorgu bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-siravc" style="--ton:#d4af37">
+      <div class="panelBaslik">
+        <h2>🔑 KOD SIR AVCISI</h2>
+        <p>Bilgisayarınızdaki projelerde açıkta kalmış API anahtarı / şifre avı (değerler maskelenir)</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Kod içine gömülü kalmış anahtarları bulur — bunlar sızarsa hesabınız
+        ele geçirilir. Bulunan değer yalnız ilk 4 + son 4 karakter olarak gösterilir; program size "şu anahtarı iptal et,
+        şuraya taşı" der.
+        <span class="ornek">Örnek: proje/ayar.py:12 → GitHub token · ghp_1a2b…9f0c · kritik</span></div>
+      <div class="e2Satir">
+        <input class="e2Girdi genis" id="e2SirGirdi" placeholder="taranacak klasör" value="C:/Users/kenan/OneDrive/Desktop">
+        <label class="onay"><input type="checkbox" id="e2SirGithub"> GitHub depolarımı da tara</label>
+        <button class="dug" id="e2SirDug">🔑 SIRLARI ARA</button>
+      </div>
+      <div id="e2SirSonuc"><div class="e2Alt">Sorgu bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-yerelag" style="--ton:#4da3ff">
+      <div class="panelBaslik">
+        <h2>📶 YEREL AĞ CİHAZLARI</h2>
+        <p>Modeminize bağlı cihazlar (ARP + UPnP) · yeni bağlanan cihaz uyarısı</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Ağınıza bağlı cihazları IP/MAC ve üretici adıyla listeler; ilk kez görülen
+        cihazı <b>YENİ</b> diye işaretler. Komşu wifi şifrenizi bulmuş mu, eski cihaz hâlâ bağlı mı — buradan anlarsınız.
+        <span class="ornek">Örnek: 192.168.1.1 · aa:bb:.. · TP-Link · router.local</span></div>
+      <div class="e2Satir"><button class="dug" id="e2AgDug">📶 AĞI TARA</button>
+        <span class="e2Not">ARP tablosu + UPnP keşfi (3 sn) · hiçbir paket ağa gönderilmez</span></div>
+      <div id="e2AgSonuc"><div class="e2Alt">Sorgu bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-sifrekontrol" style="--ton:#00ffa3">
+      <div class="panelBaslik">
+        <h2>🔐 ŞİFRE SIZINTI KONTROLÜ</h2>
+        <p>Şifreniz herhangi bir sızıntıda görülmüş mü? (şifre cihazdan çıkmaz — k-anonymity)</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Şifreniz geçmiş bir sızıntıda yer aldıysa saldırganlar onu listelerde
+        deniyor demektir. Buradaki kontrol <b>şifrenizi göndermez</b>: yalnızca özetinin ilk 5 karakteri gider, karşılaştırma
+        cihazınızda yapılır (HIBP k-anonymity).
+        <span class="ornek">Örnek: "123456" → milyonlarca sızıntı kaydı · entropi çok düşük · zayıf</span></div>
+      <div class="e2Satir">
+        <input class="e2Girdi genis" id="e2SifreGirdi" type="password" placeholder="kontrol edilecek şifre (kaydedilmez)">
+        <button class="dug" id="e2SifreDug">🔐 SIZINTIDA ARA</button>
+        <button class="dug" id="e2SifreUret">🎲 GÜÇLÜ ŞİFRE ÜRET</button>
+      </div>
+      <div id="e2SifreSonuc"><div class="e2Alt">Şifre bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-raporpaket" style="--ton:#ffb400">
+      <div class="panelBaslik">
+        <h2>🖨️ RAPOR PAKETİ (WORD / HTML + QR)</h2>
+        <p>Renkli Word belgesi veya yazdırılabilir HTML · SHA-256 kanıt mührü + QR kod</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> Ekrandaki sonuçları işyerine/müşteriye verilecek düzenli bir belgeye
+        çevirir. Belgenin SHA-256 özeti ve QR kodu basılır — sonradan değiştirilmediğini kanıtlar.
+        <span class="ornek">Örnek: 2026-09-25-1630-rapor.docx → Masaüstü\USTAD-OSINT-RAPORLAR (42 KB, QR ekli)</span></div>
+      <div class="e2Satir">
+        <input class="e2Girdi genis" id="e2RaporBaslik" placeholder="rapor başlığı" value="ÜSTAD OSINT Tarama Raporu">
+        <button class="dug" id="e2RaporWord">📄 WORD BELGESİ ÜRET</button>
+        <button class="dug" id="e2RaporHtml">🖨️ HTML RAPOR ÜRET</button>
+      </div>
+      <div id="e2RaporSonuc"><div class="e2Alt">Rapor bekleniyor…</div></div>
+    </section>
+
+    <section class="panel" id="p-bildirim" style="--ton:#8b5cf6">
+      <div class="panelBaslik">
+        <h2>🔔 OLAY &amp; BİLDİRİM MERKEZİ</h2>
+        <p>Hangi olaylarda haber verilsin · masaüstü bildirimi · WhatsApp'a gönderim</p>
+      </div>
+      <div class="e2Ipucu"><b>Ne işe yarar?</b> "Yeni port açıldı / yeni kritik CVE çıktı" gibi olaylarda masaüstü bildirimi
+        ve WhatsApp mesajı alırsınız. Zamanlanmış görev her 30 dakikada yeni olayları kontrol eder; telefonunuzda olmasanız
+        bile haberdar olursunuz.
+        <span class="ornek">Örnek: 16:42 · yeni_port · "8080 portu açıldı (192.168.1.1)" · kritik</span></div>
+      <div id="e2BildirimSonuc"><div class="e2Alt">Ayarlar yükleniyor…</div></div>
+    </section>
+  </main>
+</div>
+
+<!-- ============================== YASAL ŞERİT ============================== -->
+<footer class="yasalSerit" id="yasalSerit">
+  ⚖️ <b>YASAL UYARI:</b> Bu konsol yalnız sahibi olduğunuz veya yazılı izin aldığınız sistemlerde kullanılır.
+  İzinsiz tarama/erişim TCK 243/244 kapsamında suçtur. Tüm veriler cihazınızda kalır.
+</footer>
+
+<div class="balonlar" id="balonlar"></div>
+
+<!-- ============================== BETİKLER ============================== -->
+<script src="motor.js"></script>
+<script src="cekirdi.js"></script>
+<script src="tarama.js"></script>
+<script src="harita-gercek.js"></script>
+<script src="yuzey.js"></script>
+<script src="dunya.js"></script>
+<script src="alarm.js"></script>
+<script src="log.js"></script>
+<script src="olay.js"></script>
+<script src="rapor.js"></script>
+<script src="ayar.js"></script>
+<script src="kopru.js"></script>
+<link rel="stylesheet" href="ek.css">
+<link rel="stylesheet" href="ek2.css">
+<link rel="stylesheet" href="panel-renk.css">
+<script src="osint.js"></script>
+<script src="ek.js"></script>
+<script src="ek2.js"></script>
+<script src="hacker-3d.js"></script>
+</body>
+</html>
