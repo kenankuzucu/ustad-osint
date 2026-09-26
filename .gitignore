@@ -7,3 +7,8 @@ __pycache__/
 yerel-ag-tarama-*.txt
 baslatma-gunlugu.txt
 scratch-sunucu.log
+*.yedek
+*.yedek-*
+assets/
+*.idsig
+scratch-*

@@ -2,7 +2,7 @@
 """index.html'e resimdeki OSINT süitini ekler: eylem şeridi, menü grubu, 17 panel, künye."""
 import io, os, re
 
-YOL = r"C:\Users\kenan\OneDrive\Desktop\USTAD-OSINT\web\index.html"
+YOL = r"C:\Users\kenan\Downloads\Programs\PROJELERİM\USTAD-OSINT PC\web\index.html"
 s = io.open(YOL, encoding="utf-8").read()
 
 # ------------------------------------------------------------------ 1) CSS

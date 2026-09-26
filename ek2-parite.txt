@@ -1,0 +1,96 @@
+ÜSTAD OSINT v1.6 — JS (motor-osint.js) ↔ Python (osint-ek2a/b/c.py) PARİTE RAPORU
+================================================================================
+Tarih     : 2026-09-25
+Yöntem    : Gerçek ağ çağrıları. JS tarafı `NODE_TLS_REJECT_UNAUTHORIZED=0 node`
+            ile motor-osint.js üzerinden; Python tarafı canlı sunucu
+            http://127.0.0.1:8787/api/arac/<ad> üzerinden AYNI parametrelerle.
+Ham çıktılar: %LOCALAPPDATA%/hermes/cache/scratch/ek2-ham-sonuc.json
+
+ÖZET TABLO
+----------
+modül                 | Python (canlı)                                       | JS (motor-osint.js)                                  | eşleşti mi
+----------------------+------------------------------------------------------+------------------------------------------------------+-----------
+istismar (tek CVE)    | kev=true, epss=1, yuzdelik=100, urun=Apache Log4j2,  | kev=true, epss=1, yuzdelik=100, urun=Apache Log4j2,  | EVET (birebir)
+                      | kev_eklenme=2021-12-10, karar="ACİL — aktif…"        | kev_eklenme=2021-12-10, karar="ACİL — aktif…"        |
+istismar (çoklu CVE)  | toplam=2, kev_toplam=1; CVE-2024-3094 epss=0.8597,   | toplam=2, kev_toplam=1; CVE-2024-3094 epss=0.8597,   | EVET (birebir)
+                      | yuzdelik=99.72, not="CISA KEV kataloğunda yok"       | yuzdelik=99.72, not="CISA KEV kataloğunda yok"       |
+postaguvenlik         | spf.kayit="v=spf1 -all", politika="-all",            | spf.kayit="v=spf1 -all", politika="-all",            | EVET (birebir)
+(example.com)         | dmarc.kayit="v=DMARC1;p=reject;…", politika=reject,  | dmarc.kayit="v=DMARC1;p=reject;…", politika=reject,  |
+                      | pct=null, puan=80, seviye=iyi, null MX,              | pct=null, puan=80, seviye=iyi, null MX,              |
+                      | dkim 10 seçici (hepsi aynı gerekçeyle yok)           | dkim 10 seçici (hepsi aynı gerekçeyle yok)           |
+baslikanaliz          | risk=100, karar="YÜKSEK — sahte olabilir",           | risk=100, karar="YÜKSEK — sahte olabilir",           | EVET (birebir)
+(ham mail başlığı)    | ilk_dis_ip=45.133.1.99, received_sayisi=2,           | ilk_dis_ip=45.133.1.99, received_sayisi=2,           |
+                      | zincir gecikme_sn=5, 7 işaret, ozet metni            | zincir gecikme_sn=5, 7 işaret, ozet metni            |
+sertifika (CT)        | canlı: 429/502 (certspotter kota / crt.sh 502)       | canlı: aynı hata metni                               | EVET (hata yolu)
+                      | sentetik yükle: alt_alanlar=[alt.example.com,        | sentetik yükle: alt_alanlar=[alt.example.com,        | EVET (veri yolu,
+                      | api.example.com, example.com, www.example.com],      | api.example.com, example.com, www.example.com],      | birebir)
+                      | verenler=[Bilinmeyen CA, DigiCert, Let's Encrypt,    | verenler=[Bilinmeyen CA, DigiCert, Let's Encrypt,    |
+                      | Sectigo], sertifika_sayisi=5, yeni_sertifikalar=1,   | Sectigo], sertifika_sayisi=5, yeni_sertifikalar=1,   |
+                      | kayitlar sırası/veren/yayin/bitis/yeni alanları      | kayitlar sırası/veren/yayin/bitis/yeni alanları      |
+webzafiyet            | puan=70, seviye=orta, 10 hassas yol (403/404),       | puan=70, seviye=orta, 10 hassas yol (403/404),       | EVET (1 küçük
+(izinli alan adı)     | metotlar.OPTIONS=200, allow="OPTIONS,HEAD,GET,POST", | metotlar.OPTIONS=200, allow="OPTIONS,HEAD,GET,POST", | fark ↓)
+                      | basliklar.puan=0, 6 eksik başlık, cors temiz        | basliklar.puan=0, 6 eksik başlık, cors temiz        |
+                      | TRACE kapalı "HTTP 501"                              | TRACE kapalı "HTTP yanıt yok"                        |
+fidye (limit=100)     | toplam=100, gosterilen=100, gruplar/ulkeler/         | toplam=100, gosterilen=100, gruplar/ulkeler/         | EVET (birebir)
+(ransomware.live)     | sektorler + türkiye + kurum kayıtları                | sektorler + türkiye + kurum kayıtları                |
+saldiriakisi          | kayitlar=20, ilk IP=13.94.254.200, rapor=319739,     | kayitlar=20, ilk IP=13.94.254.200, rapor=319739,     | EVET (birebir)
+(SANS ISC)            | toplam_rapor aynı, konum_kaynagi=ip-api.com          | toplam_rapor aynı, konum_kaynagi=ip-api.com          |
+sifrekontrol (123456) | sizinti_sayisi=210461208, bulundu=true,              | sizinti_sayisi=210461208, bulundu=true,              | EVET (birebir)
+(HIBP)                | uzunluk=6, entropi_bit=19.9, entropi_karekter=2.58,  | uzunluk=6, entropi_bit=19.9, entropi_karekter=2.58,  |
+                      | karakter_havuzu=10, seviye=zayıf, 4 öneri            | karakter_havuzu=10, seviye=zayıf, 4 öneri            |
+raporpaket (html)     | kanit_sha256=22a9a299…ba874c7, bolum=1               | kanit_sha256=22a9a299…ba874c7, bolum=1               | EVET (HTML metni
+                      | boyut=1851 bayt (diskte CRLF)                        | boyut=1822 bayt (metin, LF)                          | birebir, satır
+                      |                                                      |                                                      | sonu farkı)
+bildirim              | ayar anahtarları + olaylar/olay_sayisi/okunmamis/    | aynı alan adları; durum localStorage'da              | EVET (şema)
+                      | kaynak; durum veri/bildirim.json'da                  | (osint_ek2_bildirim)                                 |
+siravc                | masaüstü: klasör taraması (KOK) çalışır              | {"hata":"yerel klasör taraması yalnız masaüstü        | APK KISITI
+                      |                                                      | sürümünde çalışır (APK'da dosya sistemi yok)"}       | (dürüst)
+yerelag               | masaüstü: arp -a + SSDP + MAC üretici                | {"hata":"yerel ağ taraması yalnız masaüstü            | APK KISITI
+                      |                                                      | sürümünde çalışır (APK'da ağ komutları…)"}           | (dürüst)
+
+EK DOĞRULAMALAR
+---------------
+• sha1Hex: WebCrypto yolu = saf JS yedek = Python hashlib → 123456 ⇒
+  7C4A8D09CA3762AF61E59520943DC26494F8941B; boş dize ⇒ DA39A3EE5E6B4B0D3255BFEF95601890AFD80709
+• ek2OzelIp ↔ Python _ozel_ip: 26 IP (RFC1918, CGNAT, 127/8, 169.254, 0/8, 224-240 çoklu yayın,
+  203.0.113/192.0.2/198.51.100 belge adresleri = özel DEĞİL, ::1/::/fc00::/fe80::/ff02::/2001:db8::1,
+  bozuk girdi) → hepsi birebir aynı sonucu verdi.
+• baslikanaliz 26 hop'luk zincir + karışık özel/genel IP'ler: ilk_dis_ip=2001:db8::1 ve zincir
+  sıralaması (gönderici→alıcı) Python ile bit bit aynı.
+• Sertifika "önceki tarama" karşılaştırması: localStorage taklidi ile 1. tarama ilk_tarama=true,
+  yeni_alt_alanlar=tam liste; 2. tarama ilk_tarama=false, yeni_alt_alanlar=[] → Python'un
+  veri/ek2-sertifika-gecmis.json davranışıyla aynı.
+• Regresyon: mevcut modüller bozulmadı — ipAnaliz('8.8.8.8') → US, tehditVerisi(zorla) →
+  c2=5/phishing=300/ioc=679, pasifRadar('example.com') → normal şema.
+• node --check web/motor-osint.js → temiz.
+
+DÜRÜST NOTLAR (APK'DA ÇALIŞMAYAN / FARKLI DAVRANAN NOKTALAR)
+------------------------------------------------------------
+1) siravc  : APK'da dosya sistemi yok → yerel klasör taraması YAPILAMAZ, uydurma bulgu üretilmez.
+             Yalnız ?github=1 + GitHub token ile kod arama çalışır; token yoksa dürüst hata döner.
+2) yerelag : APK'da `arp -a` ve UDP SSDP yok → gerçek cihaz listesi üretilemez, dürüst hata döner.
+3) raporpaket: python-docx/qrcode yok → word ve html için aynı yazdırılabilir HTML üretilir,
+             `dosya`/`qr` yerine `html` döner + `not` açıklar. `boyut`/`sha256` bu HTML metni
+             üzerinden hesaplanır (Python'da diskteki dosya, CRLF satır sonuyla → ~29 bayt fark).
+             `kanit_sha256` her iki sürümde AYNI çıkar.
+4) webzafiyet: (a) TRACE metodu tarayıcı/köprü tarafında yasaklı → kod 0 → "HTTP yanıt yok"
+             (Python "HTTP 501" görür); sonuç ("kapalı") ve puan aynı kalır.
+             (b) İstek başlığı (Origin) Java köprüsünde konulamaz → CORS yansıtma testi telefonda
+             kesin sonuç vermez; bu durumda `cors.not` alanı ile dürüstçe bildirilir.
+             (c) Kapsam listesi APK'da veri/izleme.json yerine gömülü varsayılan
+             (ustadkenankuzucu.com.tr, ustadcyber.com.tr) + localStorage (osint_ek2_izleme)
+             + istek parametresi (izinli/kapsam) üzerinden okunur. Liste dışı hedefe tarama YOK.
+5) Önbellek: Python veri/*.json dosyalarına yazar; JS bellek içi (EK2_ONBELLEK) + localStorage.
+             Dönen nesnelerde Python'un dosya kaydında görülen `_zaman` alanı JS'te dışarı verilmez
+             (arayüz okumaz); `onbellek:true` işareti iki sürümde de aynıdır.
+6) istismar: CISA KEV (~2 MB JSON) ve FIRST EPSS canlı çekilir; EPSS değerleri birebir aynı çıktı
+             (LGPD/EPSS günlük güncellenir, karşılaştırma aynı gün yapıldı).
+7) saldiriakisi: konum için ip-api (http) denenir, olmazsa ipwho.is (https) yedeğine düşülür;
+             tarayıcıda http karışık içerik engellenirse yedek devreye girer (Python'la aynı sıra).
+8) sertifika: certspotter ücretsiz kota (HTTP 429) ve crt.sh 502 verdiğinde iki sürüm de AYNI
+             dürüst hatayı döndürür; bugün canlı CT verisi alınamadığı için veri yolu aynı sahte
+             certspotter yüküyle sınandı (yukarıdaki satır).
+
+SONUÇ: 12 aracın tamamı motor-osint.js içinde, uç dağıtıcısına (uclariIsle → ek2Isle) bağlı;
+alan adları Python sürümüyle birebir. APK'da çalışamayacak üç nokta (siravc, yerelag,
+raporpaket-word) uydurma veri üretmeden dürüstçe bildirilir.

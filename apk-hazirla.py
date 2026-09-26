@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw
 EV = r"C:\Users\kenan\AndroidBuild"
 KABUK = os.path.join(EV, "kenan-osint-app")
 HEDEF = os.path.join(EV, "ustad-osint-app")
-WEB = r"C:\Users\kenan\OneDrive\Desktop\USTAD-OSINT\web"
+WEB = r"C:\Users\kenan\Downloads\Programs\PROJELERİM\USTAD-OSINT PC\web"
 IKON = os.path.join(WEB, "ikon-512.png")
 
 PAKET_YOLU = os.path.join("src", "tr", "com", "ustadkenankuzucu", "osint")

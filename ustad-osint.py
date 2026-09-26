@@ -39,6 +39,19 @@ import uuid
 from datetime import datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
+# --- Konsol kodlaması koruması (Windows'ta çökme önleyici) -------------------
+# Windows'ta çıktı bir DOSYAYA yönlendirilince (ör. .bat içindeki >> gunluk.txt)
+# Python yerel ANSI kod sayfasını (Türkçe sistemde cp1254) kullanır. Ok işareti
+# (→) ve benzeri simgeler cp1254'te YOKTUR → UnicodeEncodeError ile sunucu
+# açılışta ölür. Bu blok stdout/stderr'i UTF-8'e sabitler; kodlanamayan karakter
+# olursa çökmek yerine '?' basar. SİLMEYİN.
+for _ak in ("stdout", "stderr"):
+    try:
+        getattr(sys, _ak).reconfigure(encoding="utf-8", errors="replace",
+                                      line_buffering=True)
+    except Exception:
+        pass
+
 SURUM = "1.2"
 KOK = os.path.dirname(os.path.abspath(__file__))
 WEB = os.path.join(KOK, "web")

@@ -22,6 +22,9 @@ bir güvenlik konsoludur. İnternetteki hazır "hacker paneli" taklitlerinin aks
   "anahtar gerekli" der, sahte kayıt basmaz.
 - **Kendi ağınıza ve kendi alan adlarınıza bakar.** Dışarıyı taramaz (izinsiz tarama TCK 243/244).
 - **Her panelde "Ne işe yarar + Örnek" kutusu vardır.** Aracı kullanmak için uzman olmak gerekmez.
+- **Haritalarda renk anahtarı vardır.** Her haritanın/grafiğin altında "hangi renk ne demek" kutusu
+  bulunur: risk ölçeği (kırmızı kritik → turuncu → sarı → yeşil), C2 / tehdit IOC / nötr noktalar,
+  kendi konumun, iklim kuşağı renkleri ve akan sinyalin yönü açıkça yazılır.
 - **Yaptığı her iddiayı ölçülebilir kanıtla söyler** (aşağıdaki "doğrulanmış sonuçlar" bölümü gerçek çıktılardır).
 
 ---

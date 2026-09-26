@@ -4,6 +4,10 @@ chcp 65001 >nul
 title USTAD OSINT - Saldiri Yuzeyi ve SOC Konsolu
 cd /d "%~dp0"
 set LOG=%~dp0baslatma-gunlugu.txt
+rem Cikti dosyaya yonlendirilince Turkce kod sayfasi (cp1254) simgeleri bozar;
+rem ok isareti vb. UnicodeEncodeError ile sunucuyu olduruurdu. UTF-8'e sabitliyoruz.
+set PYTHONIOENCODING=utf-8
+set PYTHONUTF8=1
 echo ====================================================== > "%LOG%"
 echo USTAD OSINT baslatiliyor >> "%LOG%"
 date /t >> "%LOG%"
