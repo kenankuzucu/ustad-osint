@@ -9,6 +9,12 @@
   padding:8px 14px;background:var(--arka2);border-bottom:1px solid var(--cizgi);
 }
 .eylemSerit .esAd{display:flex;align-items:center;gap:9px;margin-right:8px}
+/* sol ÜST marka logosu: madalyon (amblem-medalyon.png) */
+.eylemSerit .esAd .amblem.marka{flex:0 0 44px;border-radius:50%;background:transparent}
+.eylemSerit .esAd .amblem.marka img{position:relative;z-index:2;display:block;width:100%;height:100%;
+  border-radius:50%;object-fit:cover;
+  filter:drop-shadow(0 0 5px rgba(255,196,92,.85)) drop-shadow(0 0 14px rgba(255,170,40,.40))}
+.eylemSerit .esAd .amblem.marka .amblemHalka{inset:-4px}
 .eylemSerit .esAd b{font-size:16px;letter-spacing:.5px;color:var(--yazi)}
 .eylemSerit .esAd span{display:block;font-size:9.5px;letter-spacing:2.4px;color:var(--soluk);text-transform:uppercase}
 .esDug{
